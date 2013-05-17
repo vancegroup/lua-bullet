@@ -10,6 +10,3 @@
 [submodule "submodules/osgbullet"]
 	path = submodules/osgbullet
 	url = https://github.com/vancegroup-mirrors/osgBullet-mirror.git
-[submodule "submodules/osg"]
-	path = submodules/osg
-	url = https://github.com/rpavlik/osg.git
