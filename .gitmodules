@@ -3,10 +3,10 @@
 	url = https://github.com/rpavlik/cmake-modules.git
 [submodule "submodules/osgworks"]
 	path = submodules/osgworks
-	url = https://github.com/vancegroup-mirrors/osgWorks-mirror.git
+	url = https://github.com/carlsonp/osgWorks.git
 [submodule "submodules/bullet"]
 	path = submodules/bullet
 	url = https://github.com/vancegroup-mirrors/bullet-physics.git
 [submodule "submodules/osgbullet"]
 	path = submodules/osgbullet
-	url = https://github.com/vancegroup-mirrors/osgBullet-mirror.git
+	url = https://github.com/carlsonp/osgBullet.git
