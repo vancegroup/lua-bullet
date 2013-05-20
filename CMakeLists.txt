@@ -14,6 +14,8 @@ find_package(Boost REQUIRED)
 find_package(Luabind REQUIRED)
 find_program(LUA_COMMAND lua lua5.1)
 
+message(STATUS "*Tip* Set OSGInstallType to Source and Build Tree for help finding OSG")
+
 set(BINDIR bin)
 set(LIBDIR lib)
 set(INCLUDEDIR include)
