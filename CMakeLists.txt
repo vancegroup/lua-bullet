@@ -21,5 +21,6 @@ set(BINDIR bin)
 set(LIBDIR lib)
 set(INCLUDEDIR include)
 
-add_subdirectory(submodules)
+add_subdirectory(submodules) #dependencies (osgWorks, Bullet, osgBullet)
+
 add_subdirectory(src)
