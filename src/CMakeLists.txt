@@ -1,6 +1,27 @@
+#Put some checks in here so we know the variables have a value
+#http://www.cmake.org/cmake/help/v2.8.11/cmake.html#command:message
+if("${LUABIND_INCLUDE_DIRS}" STREQUAL "")
+	message(FATAL_ERROR "LUABIND_INCLUDE_DIRS is empty.")
+endif()
+if("${OPENSCENEGRAPH_INCLUDE_DIR}" STREQUAL "")
+	message(FATAL_ERROR "OPENSCENEGRAPH_INCLUDE_DIR is empty.")
+endif()
 include_directories(${LUABIND_INCLUDE_DIRS} ${OPENSCENEGRAPH_INCLUDE_DIR} ${CMAKE_INSTALL_PREFIX}/include/)
 
 add_definitions(-DLUABULLET_BUILDING)
+
+
+list(APPEND CMAKE_PREFIX_PATH "${CMAKE_INSTALL_PREFIX}/lib/")
+find_package(Bullet REQUIRED)
+
+#Add FindOSGWorks.cmake file
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/submodules/osgworks/extra/")
+find_package(osgWorks REQUIRED)
+
+#Add FindOSGBullet.cmake file
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/submodules/osgbullet/extra/")
+find_package(osgBullet REQUIRED)
+
 
 set(SOURCES
 	BindingFwd.h
@@ -41,7 +62,8 @@ set(OSGBULLET_BINDING
 
 add_library(luabullet MODULE ${SOURCES} ${OSGBULLET_BINDING})
 set_property(TARGET luabullet PROPERTY PREFIX "")
-target_link_libraries(luabullet ${LUABIND_LIBRARIES})
+target_link_libraries(luabullet ${LUABIND_LIBRARIES} ${OPENSCENEGRAPH_LIBRARIES} ${BULLET_COLLISION_LIBRARY} ${BULLET_DYNAMICS_LIBRARY}
+								${BULLET_MATH_LIBRARY} ${BULLET_SOFTBODY_LIBRARY} ${osgWorks_LIBRARY_DIRS} ${osgBullet_LIBRARY_DIRS})
 
 
 install(TARGETS luabullet
@@ -67,6 +89,8 @@ endif()
 get_filename_component(LUA_LIBDIR "${LUA_LIBRARY}" PATH)
 list(APPEND LIBRARY_DIRS "${LUA_LIBDIR}")
 
+
+#For OSX:
 #http://www.cmake.org/Wiki/BundleUtilitiesExample
 #install(CODE "
 #  include(BundleUtilities)
