@@ -49,7 +49,8 @@ set(OSGBULLET_BINDING
 	#osgbDynamics/Contraints.cpp
 	
 	LinearMath/btVector3.cpp
-	#LinearMath/btAlignedAllocator.cpp
+	#BulletCollision/CollisionShapes/btCollisionShape.cpp
+	osgbDynamics/CreationRecord.cpp
 	
 	#osgbDynamics/GroundPlane.cpp
 	#osgbDynamics/MotionState.cpp

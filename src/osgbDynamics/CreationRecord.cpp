@@ -23,7 +23,7 @@
 // Library/third-party includes
 #include <luabind/class.hpp>
 
-#include <LinearMath/btAlignedAllocator.h>
+#include <osgbDynamics/CreationRecord.h>
 
 
 // Standard includes
@@ -31,12 +31,13 @@
 
 
 
-template<> luabind::scope getLuaBinding<btAlignedAllocator>() {
+template<> luabind::scope getLuaBinding<osgbDynamics::CreationRecord>() {
 	using namespace luabind;
 
 	return
-	    class_<btAlignedAllocator> ("btAlignedAllocator")
+	    class_<osgbDynamics::CreationRecord> ("CreationRecord")
 	    .def(constructor<>())
-	    //TODO: implement this
+	    .def("setCenterOfMass", &osgbDynamics::CreationRecord::setCenterOfMass)
+	    .def("setMargin", &osgbDynamics::CreationRecord::setMargin)
 	    ;
 }
