@@ -57,6 +57,8 @@ int luaopen_luabullet(lua_State *L) {
 	    getLuaBinding<btBoxShape>(),
 	    getLuaBinding<btRigidBody>(),
 	    getLuaBinding<btDefaultCollisionConfiguration>(),
+	    getLuaBinding<btCollisionDispatcher>(),
+	    getLuaBinding<btSequentialImpulseConstraintSolver>(),
 
 	    //osgBullet
 	    getLuaBinding<osgbDynamics::CreationRecord>(),
