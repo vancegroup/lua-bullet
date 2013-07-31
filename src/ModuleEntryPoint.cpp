@@ -30,6 +30,9 @@
 #include <LinearMath/btVector3.h>
 //#include <BulletCollision/CollisionShapes/btCollisionShape.h>
 #include <osgbDynamics/CreationRecord.h>
+#include <BulletCollision/CollisionShapes/btBoxShape.h>
+#include <BulletDynamics/Dynamics/btRigidBody.h>
+#include <BulletCollision/CollisionDispatch/btDefaultCollisionConfiguration.h>
 
 // Standard includes
 // - none
@@ -41,8 +44,14 @@ int luaopen_luabullet(lua_State *L) {
 	//http://www.lua.org/manual/5.1/manual.html#5.3
 	module(L, "bullet")
 	[
+        //bullet
 	    getLuaBinding<btVector3>(),
 	    //getLuaBinding<btCollisionShape>(),
+	    getLuaBinding<btBoxShape>(),
+	    getLuaBinding<btRigidBody>(),
+	    getLuaBinding<btDefaultCollisionConfiguration>(),
+
+	    //osgBullet
 	    getLuaBinding<osgbDynamics::CreationRecord>(),
 
 	    scope() // trailing empty scope so we can put commas after each binding call

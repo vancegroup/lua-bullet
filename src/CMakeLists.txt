@@ -50,6 +50,10 @@ set(OSGBULLET_BINDING
 	
 	LinearMath/btVector3.cpp
 	#BulletCollision/CollisionShapes/btCollisionShape.cpp
+	BulletCollision/CollisionShapes/btBoxShape.cpp
+	BulletDynamics/Dynamics/btRigidBody.cpp
+	BulletCollision/CollisionDispatch/btDefaultCollisionConfiguration.cpp
+	
 	osgbDynamics/CreationRecord.cpp
 	
 	#osgbDynamics/GroundPlane.cpp
