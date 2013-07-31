@@ -64,7 +64,11 @@ int luaopen_luabullet(lua_State *L) {
 	    getLuaBinding<btAxisSweep3>(),
 	    getLuaBinding<btDiscreteDynamicsWorld>(),
 
-	    //osgBullet
+	    scope() // trailing empty scope so we can put commas after each binding call
+	];
+	module(L, "osgbDynamics")
+	[
+        //osgBullet
 	    getLuaBinding<osgbDynamics::CreationRecord>(),
 
 	    scope() // trailing empty scope so we can put commas after each binding call
