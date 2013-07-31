@@ -60,6 +60,7 @@ set(OSGBULLET_BINDING
 	BulletCollision/CollisionDispatch/btDefaultCollisionConfiguration.cpp
 	BulletCollision/CollisionDispatch/btCollisionDispatcher.cpp
 	BulletDynamics/ConstraintSolver/btSequentialImpulseConstraintSolver.cpp
+	BulletCollision/BroadphaseCollision/btAxisSweep3.cpp
 	
 	osgbDynamics/CreationRecord.cpp
 	
