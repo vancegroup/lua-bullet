@@ -35,7 +35,7 @@ template<> luabind::scope getLuaBinding<btBoxShape>() {
 
 	return
 	    class_<btBoxShape> ("btBoxShape")
-	    .def(constructor<>())
+	    .def(constructor<const btVector3&>())
 	    .def("getHalfExtentsWithMargin", &btBoxShape::getHalfExtentsWithMargin)
 	    ;
 }
