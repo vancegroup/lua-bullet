@@ -24,6 +24,9 @@
 #include <luabind/class.hpp>
 
 #include <BulletCollision/CollisionDispatch/btDefaultCollisionConfiguration.h>
+#include <LinearMath/btPoolAllocator.h>
+#include <BulletCollision/NarrowPhaseCollision/btVoronoiSimplexSolver.h>
+#include <BulletCollision/CollisionDispatch/btCollisionCreateFunc.h>
 
 // Standard includes
 // - none
@@ -35,7 +38,7 @@ template<> luabind::scope getLuaBinding<btDefaultCollisionConfiguration>() {
 
 	return
 	    class_<btDefaultCollisionConfiguration> ("btDefaultCollisionConfiguration")
-	    .def(constructor<const btDefaultCollisionConfiguration &>())
+	    .def(constructor<const btDefaultCollisionConstructionInfo &>())
 	    .def("getPersistentManifoldPool", &btDefaultCollisionConfiguration::getPersistentManifoldPool)
 	    .def("getCollisionAlgorithmPool", &btDefaultCollisionConfiguration::getCollisionAlgorithmPool)
 	    .def("getSimplexSolver", &btDefaultCollisionConfiguration::getSimplexSolver)

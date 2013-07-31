@@ -24,11 +24,20 @@
 #include <luabind/class.hpp>
 
 #include <BulletDynamics/Dynamics/btRigidBody.h>
+#include <BulletCollision/CollisionShapes/btCollisionShape.h>
+#include <BulletDynamics/ConstraintSolver/btTypedConstraint.h>
 
 // Standard includes
 // - none
 
-
+namespace {
+    const btCollisionShape* getCollisionShapeConst(btRigidBody const * b) {
+        return b->getCollisionShape();
+    }
+    btCollisionShape* getCollisionShapeNonConst(btRigidBody * b) {
+        return b->getCollisionShape();
+    }
+}
 
 template<> luabind::scope getLuaBinding<btRigidBody>() {
 	using namespace luabind;
@@ -40,7 +49,7 @@ template<> luabind::scope getLuaBinding<btRigidBody>() {
 	    .def("proceedToTransform", &btRigidBody::proceedToTransform)
 	    .def("predictIntegratedTransform", &btRigidBody::predictIntegratedTransform)
 	    .def("saveKinematicsState", &btRigidBody::saveKinematicState)
-	    .def("applyGravity", &btRigidBody::applyGravity
+	    .def("applyGravity", &btRigidBody::applyGravity)
 	    .def("setGravity", &btRigidBody::setGravity)
 	    .def("getGravity", &btRigidBody::getGravity)
 	    .def("setDamping", &btRigidBody::setDamping)
@@ -49,7 +58,8 @@ template<> luabind::scope getLuaBinding<btRigidBody>() {
 	    .def("getLinearSleepingThreshold", &btRigidBody::getLinearSleepingThreshold)
 	    .def("getAngularSleepingThreshold", &btRigidBody::getAngularSleepingThreshold)
 	    .def("applyDamping", &btRigidBody::applyDamping)
-	    .def("getCollisionShape", &btRigidBody::getCollisionShape)
+	    //.def("getCollisionShape", &getCollisionShapeConst)
+	    //.def("getCollisionShape", &getCollisionShapeNonConst)
 	    .def("setMassProps", &btRigidBody::setMassProps)
 	    .def("getLinearFactor", &btRigidBody::getLinearFactor)
 	    .def("setLinearFactor", &btRigidBody::setLinearFactor)
@@ -86,12 +96,12 @@ template<> luabind::scope getLuaBinding<btRigidBody>() {
 	    .def("computeAngularImpulseDenominator", &btRigidBody::computeAngularImpulseDenominator)
 	    .def("updateDeactivation", &btRigidBody::updateDeactivation)
 	    .def("wantsSleeping", &btRigidBody::wantsSleeping)
-	    .def("getBroadphaseProxy", &btRigidBody::getBroadphaseProxy)
-	    .def("setNewBroadphaseProxy", &btRigidBody::setNewBroadphaseProxy)
-	    .def("getMotionState", &btRigidBody::getMotionState)
-	    .def("setMotionState", &btRigidBody::setMotionState)
-	    .def("setAngularFactor", &btRigidBody::setAngularFactor)
-	    .def("getAngularFactor", &btRigidBody::getAngularFactor)
+	    //.def("getBroadphaseProxy", (btBroadphaseProxy const * (btRigidBody::*)() const)&btRigidBody::getBroadphaseProxy)
+	    //.def("setNewBroadphaseProxy", &btRigidBody::setNewBroadphaseProxy)
+	    //.def("getMotionState", &btRigidBody::getMotionState)
+	    //.def("setMotionState", &btRigidBody::setMotionState)
+	    //.def("setAngularFactor", &btRigidBody::setAngularFactor)
+	    //.def("getAngularFactor", &btRigidBody::getAngularFactor)
 	    .def("isInWorld", &btRigidBody::isInWorld)
 	    .def("checkCollideWithOverride", &btRigidBody::checkCollideWithOverride)
 	    .def("addConstraintRef", &btRigidBody::addConstraintRef)
@@ -102,7 +112,7 @@ template<> luabind::scope getLuaBinding<btRigidBody>() {
 	    .def("getFlags", &btRigidBody::getFlags)
 	    .def("computeGyroscopicForce", &btRigidBody::computeGyroscopicForce)
 	    .def("calculateSerializeBufferSize", &btRigidBody::calculateSerializeBufferSize)
-	    .def("serialize", &btRigidBody::serialize)
-	    .def("serializeSingleObject", &btRigidBody::serializeSingleObject)
+	    //.def("serialize", &btRigidBody::serialize)
+	    //.def("serializeSingleObject", &btRigidBody::serializeSingleObject)
 	    ;
 }
