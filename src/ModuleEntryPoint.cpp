@@ -34,6 +34,7 @@ class btVector3;
 class btBoxShape;
 class btRigidBody;
 class btDefaultCollisionConfiguration;
+class btCollisionDispatcher;
 //osgBullet:
 namespace osgbDynamics{
     class CreationRecord;
