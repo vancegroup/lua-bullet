@@ -35,7 +35,7 @@ template<> luabind::scope getLuaBinding<btDefaultCollisionConfiguration>() {
 
 	return
 	    class_<btDefaultCollisionConfiguration> ("btDefaultCollisionConfiguration")
-	    .def(constructor<>())
+	    .def(constructor<const btDefaultCollisionConfiguration &>())
 	    .def("getPersistentManifoldPool", &btDefaultCollisionConfiguration::getPersistentManifoldPool)
 	    .def("getCollisionAlgorithmPool", &btDefaultCollisionConfiguration::getCollisionAlgorithmPool)
 	    .def("getSimplexSolver", &btDefaultCollisionConfiguration::getSimplexSolver)
