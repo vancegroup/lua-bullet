@@ -58,6 +58,7 @@ template<> luabind::scope getLuaBinding<btRigidBody>() {
 	    .def("getLinearSleepingThreshold", &btRigidBody::getLinearSleepingThreshold)
 	    .def("getAngularSleepingThreshold", &btRigidBody::getAngularSleepingThreshold)
 	    .def("applyDamping", &btRigidBody::applyDamping)
+	    ///@TODO figure out how we can bind these appropriately
 	    //.def("getCollisionShape", &getCollisionShapeConst)
 	    //.def("getCollisionShape", &getCollisionShapeNonConst)
 	    .def("setMassProps", &btRigidBody::setMassProps)
@@ -96,6 +97,7 @@ template<> luabind::scope getLuaBinding<btRigidBody>() {
 	    .def("computeAngularImpulseDenominator", &btRigidBody::computeAngularImpulseDenominator)
 	    .def("updateDeactivation", &btRigidBody::updateDeactivation)
 	    .def("wantsSleeping", &btRigidBody::wantsSleeping)
+	    ///@TODO figure out how we can bind these appropriately
 	    //.def("getBroadphaseProxy", (btBroadphaseProxy const * (btRigidBody::*)() const)&btRigidBody::getBroadphaseProxy)
 	    //.def("setNewBroadphaseProxy", &btRigidBody::setNewBroadphaseProxy)
 	    //.def("getMotionState", &btRigidBody::getMotionState)
@@ -112,6 +114,7 @@ template<> luabind::scope getLuaBinding<btRigidBody>() {
 	    .def("getFlags", &btRigidBody::getFlags)
 	    .def("computeGyroscopicForce", &btRigidBody::computeGyroscopicForce)
 	    .def("calculateSerializeBufferSize", &btRigidBody::calculateSerializeBufferSize)
+	    ///@TODO figure out how we can bind these appropriately
 	    //.def("serialize", &btRigidBody::serialize)
 	    //.def("serializeSingleObject", &btRigidBody::serializeSingleObject)
 	    ;
