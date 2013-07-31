@@ -6,21 +6,26 @@ endif()
 if("${OPENSCENEGRAPH_INCLUDE_DIR}" STREQUAL "")
 	message(FATAL_ERROR "OPENSCENEGRAPH_INCLUDE_DIR is empty.")
 endif()
-include_directories(${LUABIND_INCLUDE_DIRS} ${OPENSCENEGRAPH_INCLUDE_DIR} ${CMAKE_INSTALL_PREFIX}/include/)
+
+include_directories(${LUABIND_INCLUDE_DIRS}
+	${OPENSCENEGRAPH_INCLUDE_DIR}
+	"${OSGWORKS_INSTALL_DIR}/include"
+	"${BULLET_INSTALL_DIR}/include/bullet"
+	"${OSGBULLET_INSTALL_DIR}/include")
 
 add_definitions(-DLUABULLET_BUILDING)
 
 
-list(APPEND CMAKE_PREFIX_PATH "${CMAKE_INSTALL_PREFIX}/lib/")
-find_package(Bullet REQUIRED)
+#list(APPEND CMAKE_PREFIX_PATH "${CMAKE_INSTALL_PREFIX}/lib/")
+#find_package(Bullet REQUIRED)
 
 #Add FindOSGWorks.cmake file
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/submodules/osgworks/extra/")
-find_package(osgWorks REQUIRED)
+#list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/submodules/osgworks/extra/")
+#find_package(osgWorks REQUIRED)
 
 #Add FindOSGBullet.cmake file
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/submodules/osgbullet/extra/")
-find_package(osgBullet REQUIRED)
+#list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/submodules/osgbullet/extra/")
+#find_package(osgBullet REQUIRED)
 
 
 set(SOURCES
@@ -67,9 +72,18 @@ set(OSGBULLET_BINDING
 
 add_library(luabullet MODULE ${SOURCES} ${OSGBULLET_BINDING})
 set_property(TARGET luabullet PROPERTY PREFIX "")
-target_link_libraries(luabullet ${LUA_LIBRARY} ${LUA_LIBRARIES} ${LUABIND_LIBRARIES} ${LUABIND_LIBRARY} ${OPENSCENEGRAPH_LIBRARIES}
-								${BULLET_COLLISION_LIBRARY} ${BULLET_DYNAMICS_LIBRARY} ${BULLET_MATH_LIBRARY} ${BULLET_SOFTBODY_LIBRARY}
-								${osgWorks_LIBRARY_DIRS} ${osgBullet_LIBRARY_DIRS})
+target_link_libraries(luabullet
+	${LUA_LIBRARIES}
+	${LUABIND_LIBRARIES}
+	${OPENSCENEGRAPH_LIBRARIES}
+	"${BULLET_INSTALL_DIR}/lib/${CMAKE_SHARED_LIBRARY_PREFIX}BulletCollision${CMAKE_SHARED_LIBRARY_SUFFIX}"
+	"${BULLET_INSTALL_DIR}/lib/${CMAKE_SHARED_LIBRARY_PREFIX}BulletDynamics${CMAKE_SHARED_LIBRARY_SUFFIX}"
+	"${BULLET_INSTALL_DIR}/lib/${CMAKE_SHARED_LIBRARY_PREFIX}LinearMath${CMAKE_SHARED_LIBRARY_SUFFIX}"
+	"${BULLET_INSTALL_DIR}/lib/${CMAKE_SHARED_LIBRARY_PREFIX}BulletSoftBody${CMAKE_SHARED_LIBRARY_SUFFIX}"
+	"${OSGBULLET_INSTALL_DIR}/lib/${CMAKE_SHARED_LIBRARY_PREFIX}osgbCollision${CMAKE_SHARED_LIBRARY_SUFFIX}"
+	"${OSGBULLET_INSTALL_DIR}/lib/${CMAKE_SHARED_LIBRARY_PREFIX}osgbDynamics${CMAKE_SHARED_LIBRARY_SUFFIX}")
+
+add_dependencies(luabullet osgBullet)
 
 
 install(TARGETS luabullet
