@@ -27,12 +27,17 @@
 // Library/third-party includes
 #include <luabind/open.hpp>
 
-#include <LinearMath/btVector3.h>
-//#include <BulletCollision/CollisionShapes/btCollisionShape.h>
-#include <osgbDynamics/CreationRecord.h>
-#include <BulletCollision/CollisionShapes/btBoxShape.h>
-#include <BulletDynamics/Dynamics/btRigidBody.h>
-#include <BulletCollision/CollisionDispatch/btDefaultCollisionConfiguration.h>
+//Forward declare all the things we need
+//Bullet:
+class btBoxShape;
+class btVector3;
+class btBoxShape;
+class btRigidBody;
+class btDefaultCollisionConfiguration;
+//osgBullet:
+namespace osgbDynamics{
+    class CreationRecord;
+}
 
 // Standard includes
 // - none
