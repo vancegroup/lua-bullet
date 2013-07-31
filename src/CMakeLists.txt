@@ -59,6 +59,7 @@ set(OSGBULLET_BINDING
 	BulletDynamics/Dynamics/btRigidBody.cpp
 	BulletCollision/CollisionDispatch/btDefaultCollisionConfiguration.cpp
 	BulletCollision/CollisionDispatch/btCollisionDispatcher.cpp
+	BulletDynamics/ConstraintSolver/btSequentialImpulseConstraintSolver.cpp
 	
 	osgbDynamics/CreationRecord.cpp
 	
