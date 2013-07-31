@@ -35,8 +35,9 @@ template<> luabind::scope getLuaBinding<btRigidBody>() {
 
 	return
 	    class_<btRigidBody> ("btRigidBody")
-	    .def(constructor<>())
-	    .def("proceedToTransform", &btRigidBody::proceedToTransform
+	    .def(constructor<const btRigidBody::btRigidBodyConstructionInfo &>())
+	    .def(constructor<btScalar, btMotionState *, btCollisionShape *, const btVector3 &>())
+	    .def("proceedToTransform", &btRigidBody::proceedToTransform)
 	    .def("predictIntegratedTransform", &btRigidBody::predictIntegratedTransform)
 	    .def("saveKinematicsState", &btRigidBody::saveKinematicState)
 	    .def("applyGravity", &btRigidBody::applyGravity
