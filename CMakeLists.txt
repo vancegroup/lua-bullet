@@ -1,5 +1,5 @@
 
-cmake_minimum_required(VERSION 2.8.4)
+cmake_minimum_required(VERSION 2.8.5)
 
 # Set package properties
 project(luabullet)
@@ -16,10 +16,7 @@ find_program(LUA_COMMAND lua lua5.1)
 
 message(STATUS "Make sure CMAKE_INSTALL_PREFIX is set and has appropriate permissions.")
 
-
-set(BINDIR bin)
-set(LIBDIR lib)
-set(INCLUDEDIR include)
+include(GNUInstallDirs)
 
 add_subdirectory(submodules) #dependencies (osgWorks, Bullet, osgBullet)
 
