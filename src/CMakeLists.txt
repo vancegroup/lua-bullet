@@ -39,20 +39,7 @@ set(SOURCES
 )
 
 set(OSGBULLET_BINDING
-	#osgbCollision/BoundingCone.cpp
-	#osgbCollision/BoundingCylinder.cpp
-	#osgbCollision/Chart.cpp
-	#osgbCollision/CollectVerticesVistor.cpp
-	#osgbCollision/CollisionShapes.cpp
-	#osgbCollision/ComputeCylinderVisitor.cpp
-	#osgbCollision/ComputeShapeVisitor.cpp
-	#osgbCollision/ComputeTriMeshVisitor.cpp
-	#osgbCollision/GLDebugDrawer.cpp
-	#osgbCollision/Utils.cpp
-	#osgbCollision/Version.cpp
-	#osgbCollision/VertexAggOp.cpp
-	#osgbDynamics/Contraints.cpp
-	
+	#Bullet:	
 	LinearMath/btVector3.cpp
 	#BulletCollision/CollisionShapes/btCollisionShape.cpp
 	BulletCollision/CollisionShapes/btBoxShape.cpp
@@ -66,17 +53,10 @@ set(OSGBULLET_BINDING
 	BulletCollision/BroadphaseCollision/btBroadphaseProxy.cpp
 	BulletCollision/CollisionShapes/btCompoundShape.cpp
 	
+	#osgBullet:
 	osgbDynamics/CreationRecord.cpp
 	osgbDynamics/MotionState.cpp
 	osgbDynamics/PhysicsThread.cpp
-	
-	#osgbDynamics/GroundPlane.cpp
-	#osgbDynamics/MotionState.cpp
-	#osgbDynamics/PhysicsState.cpp
-	#osgbDynamics/PhysicsThread.cpp
-	#osgbDynamics/RigidBody.cpp
-	#osgbDynamics/RigidBodyAnimation.cpp
-	#osgbDynamics/TripleBuffer.cpp
 )
 
 add_library(luabullet MODULE ${SOURCES} ${OSGBULLET_BINDING})
