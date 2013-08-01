@@ -45,6 +45,7 @@ class btCompoundShape;
 namespace osgbDynamics{
     class CreationRecord;
     class MotionState;
+    class PhysicsThread;
 }
 
 // Standard includes
@@ -78,6 +79,7 @@ int luaopen_luabullet(lua_State *L) {
         //osgBullet
 	    getLuaBinding<osgbDynamics::CreationRecord>(),
 	    getLuaBinding<osgbDynamics::MotionState>(),
+	    getLuaBinding<osgbDynamics::PhysicsThread>(),
 
 	    scope() // trailing empty scope so we can put commas after each binding call
 	];

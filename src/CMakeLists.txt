@@ -68,6 +68,7 @@ set(OSGBULLET_BINDING
 	
 	osgbDynamics/CreationRecord.cpp
 	osgbDynamics/MotionState.cpp
+	osgbDynamics/PhysicsThread.cpp
 	
 	#osgbDynamics/GroundPlane.cpp
 	#osgbDynamics/MotionState.cpp
