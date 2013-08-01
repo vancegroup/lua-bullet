@@ -41,6 +41,7 @@ class btDiscreteDynamicsWorld;
 //osgBullet:
 namespace osgbDynamics{
     class CreationRecord;
+    class MotionState;
 }
 
 // Standard includes
@@ -70,6 +71,7 @@ int luaopen_luabullet(lua_State *L) {
 	[
         //osgBullet
 	    getLuaBinding<osgbDynamics::CreationRecord>(),
+	    getLuaBinding<osgbDynamics::MotionState>(),
 
 	    scope() // trailing empty scope so we can put commas after each binding call
 	];

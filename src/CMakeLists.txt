@@ -64,6 +64,7 @@ set(OSGBULLET_BINDING
 	BulletDynamics/Dynamics/btDiscreteDynamicsWorld.cpp
 	
 	osgbDynamics/CreationRecord.cpp
+	osgbDynamics/MotionState.cpp
 	
 	#osgbDynamics/GroundPlane.cpp
 	#osgbDynamics/MotionState.cpp
