@@ -40,6 +40,7 @@ class btAxisSweep3;
 class btDiscreteDynamicsWorld;
 class btTransform;
 class btBroadphaseProxy;
+class btCompoundShape;
 //osgBullet:
 namespace osgbDynamics{
     class CreationRecord;
@@ -68,6 +69,7 @@ int luaopen_luabullet(lua_State *L) {
 	    getLuaBinding<btDiscreteDynamicsWorld>(),
 	    getLuaBinding<btTransform>(),
 	    getLuaBinding<btBroadphaseProxy>(),
+	    getLuaBinding<btCompoundShape>(),
 
 	    scope() // trailing empty scope so we can put commas after each binding call
 	];
