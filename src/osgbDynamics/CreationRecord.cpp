@@ -24,6 +24,7 @@
 #include <luabind/class.hpp>
 
 #include <osgbDynamics/CreationRecord.h>
+#include <osg/Node>
 
 
 // Standard includes
@@ -39,5 +40,20 @@ template<> luabind::scope getLuaBinding<osgbDynamics::CreationRecord>() {
 	    .def(constructor<>())
 	    .def("setCenterOfMass", &osgbDynamics::CreationRecord::setCenterOfMass)
 	    .def("setMargin", &osgbDynamics::CreationRecord::setMargin)
+	    .property("sceneGraph", &osgbDynamics::CreationRecord::_sceneGraph)
+	    .property("version", &osgbDynamics::CreationRecord::_version)
+	    .property("com", &osgbDynamics::CreationRecord::_com)
+	    .property("comSet", &osgbDynamics::CreationRecord::_comSet)
+	    .property("margin", &osgbDynamics::CreationRecord::_margin)
+	    .property("marginSet", &osgbDynamics::CreationRecord::_marginSet)
+	    .property("scale", &osgbDynamics::CreationRecord::_scale)
+	    .property("parentTransform", &osgbDynamics::CreationRecord::_parentTransform)
+	    .property("shapeType", &osgbDynamics::CreationRecord::_shapeType)
+	    .property("mass", &osgbDynamics::CreationRecord::_mass)
+	    .property("restitution", &osgbDynamics::CreationRecord::_restitution)
+	    .property("friction", &osgbDynamics::CreationRecord::_friction)
+	    .property("axis", &osgbDynamics::CreationRecord::_axis)
+	    .property("reductionLevel", &osgbDynamics::CreationRecord::_reductionLevel)
+	    .property("overall", &osgbDynamics::CreationRecord::_overall)
 	    ;
 }
