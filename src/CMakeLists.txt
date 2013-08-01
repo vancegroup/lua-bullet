@@ -62,6 +62,7 @@ set(OSGBULLET_BINDING
 	BulletDynamics/ConstraintSolver/btSequentialImpulseConstraintSolver.cpp
 	BulletCollision/BroadphaseCollision/btAxisSweep3.cpp
 	BulletDynamics/Dynamics/btDiscreteDynamicsWorld.cpp
+	LinearMath/btTransform.cpp
 	
 	osgbDynamics/CreationRecord.cpp
 	osgbDynamics/MotionState.cpp

@@ -38,6 +38,7 @@ class btCollisionDispatcher;
 class btSequentialImpulseConstraintSolver;
 class btAxisSweep3;
 class btDiscreteDynamicsWorld;
+class btTransform;
 //osgBullet:
 namespace osgbDynamics{
     class CreationRecord;
@@ -64,6 +65,7 @@ int luaopen_luabullet(lua_State *L) {
 	    getLuaBinding<btSequentialImpulseConstraintSolver>(),
 	    getLuaBinding<btAxisSweep3>(),
 	    getLuaBinding<btDiscreteDynamicsWorld>(),
+	    getLuaBinding<btTransform>(),
 
 	    scope() // trailing empty scope so we can put commas after each binding call
 	];
