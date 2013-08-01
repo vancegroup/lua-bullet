@@ -47,6 +47,9 @@ namespace osgbDynamics{
     class MotionState;
     class PhysicsThread;
 }
+namespace osgbCollision{
+    class ComputeShapeVisitor;
+}
 
 // Standard includes
 // - none
@@ -80,6 +83,13 @@ int luaopen_luabullet(lua_State *L) {
 	    getLuaBinding<osgbDynamics::CreationRecord>(),
 	    getLuaBinding<osgbDynamics::MotionState>(),
 	    getLuaBinding<osgbDynamics::PhysicsThread>(),
+
+	    scope() // trailing empty scope so we can put commas after each binding call
+	];
+    module(L, "osgbCollision")
+	[
+        //osgBullet
+	    getLuaBinding<osgbCollision::ComputeShapeVisitor>(),
 
 	    scope() // trailing empty scope so we can put commas after each binding call
 	];
