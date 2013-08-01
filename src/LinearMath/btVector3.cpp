@@ -83,8 +83,8 @@ template<> luabind::scope getLuaBinding<btVector3>() {
 	    .def("maxDot", &btVector3::maxDot)
 	    .def("minDot", &btVector3::minDot)
 	    .def("dot3", &btVector3::dot3)
-	    .property("x", &btVector3::getX)
-	    .property("y", &btVector3::getY)
-	    .property("z", &btVector3::getZ)
+	    .property("x", &btVector3::getX, &btVector3::setX)
+	    .property("y", &btVector3::getY, &btVector3::setY)
+	    .property("z", &btVector3::getZ, &btVector3::setZ)
 	    ;
 }
