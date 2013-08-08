@@ -26,6 +26,7 @@
 #include <BulletDynamics/Dynamics/btRigidBody.h>
 #include <BulletCollision/CollisionShapes/btCollisionShape.h>
 #include <BulletDynamics/ConstraintSolver/btTypedConstraint.h>
+#include <LinearMath/btSerializer.h>
 
 // Standard includes
 // - none
@@ -36,6 +37,20 @@ namespace {
     }
     btCollisionShape* getCollisionShapeNonConst(btRigidBody * b) {
         return b->getCollisionShape();
+    }
+
+    const btBroadphaseProxy* getBroadphaseProxyConst(btRigidBody const * b) {
+        return b->getBroadphaseProxy();
+    }
+    btBroadphaseProxy* getBroadphaseProxyNonConst(btRigidBody * b) {
+        return b->getBroadphaseProxy();
+    }
+
+    const btMotionState* getMotionStateConst(btRigidBody const * b) {
+        return b->getMotionState();
+    }
+    btMotionState* getMotionStateNonConst(btRigidBody * b) {
+        return b->getMotionState();
     }
 }
 
@@ -58,9 +73,8 @@ template<> luabind::scope getLuaBinding<btRigidBody>() {
 	    .def("getLinearSleepingThreshold", &btRigidBody::getLinearSleepingThreshold)
 	    .def("getAngularSleepingThreshold", &btRigidBody::getAngularSleepingThreshold)
 	    .def("applyDamping", &btRigidBody::applyDamping)
-	    ///@TODO figure out how we can bind these appropriately
-	    //.def("getCollisionShape", &getCollisionShapeConst)
-	    //.def("getCollisionShape", &getCollisionShapeNonConst)
+	    .def("getCollisionShape", &getCollisionShapeConst)
+	    .def("getCollisionShape", &getCollisionShapeNonConst)
 	    .def("setMassProps", &btRigidBody::setMassProps)
 	    .def("getLinearFactor", &btRigidBody::getLinearFactor)
 	    .def("setLinearFactor", &btRigidBody::setLinearFactor)
@@ -97,13 +111,16 @@ template<> luabind::scope getLuaBinding<btRigidBody>() {
 	    .def("computeAngularImpulseDenominator", &btRigidBody::computeAngularImpulseDenominator)
 	    .def("updateDeactivation", &btRigidBody::updateDeactivation)
 	    .def("wantsSleeping", &btRigidBody::wantsSleeping)
-	    ///@TODO figure out how we can bind these appropriately
-	    //.def("getBroadphaseProxy", (btBroadphaseProxy const * (btRigidBody::*)() const)&btRigidBody::getBroadphaseProxy)
-	    //.def("setNewBroadphaseProxy", &btRigidBody::setNewBroadphaseProxy)
-	    //.def("getMotionState", &btRigidBody::getMotionState)
-	    //.def("setMotionState", &btRigidBody::setMotionState)
-	    //.def("setAngularFactor", &btRigidBody::setAngularFactor)
-	    //.def("getAngularFactor", &btRigidBody::getAngularFactor)
+	    .def("getBroadphaseProxy", &getBroadphaseProxyConst)
+	    .def("getBroadphaseProxy", &getBroadphaseProxyNonConst)
+	    .def("setNewBroadphaseProxy", &btRigidBody::setNewBroadphaseProxy)
+	    .def("getMotionState", &getMotionStateConst)
+	    .def("getMotionState", &getMotionStateNonConst)
+	    .def("setMotionState", &btRigidBody::setMotionState)
+	    //http://www.rasterbar.com/products/luabind/docs.html#overloaded-functions
+	    .def("setAngularFactor", (void(btRigidBody::*)(btScalar)) &btRigidBody::setAngularFactor)
+	    .def("setAngularFactor", (void(btRigidBody::*)(const btVector3&)) &btRigidBody::setAngularFactor)
+	    .def("getAngularFactor", &btRigidBody::getAngularFactor)
 	    .def("isInWorld", &btRigidBody::isInWorld)
 	    .def("checkCollideWithOverride", &btRigidBody::checkCollideWithOverride)
 	    .def("addConstraintRef", &btRigidBody::addConstraintRef)
@@ -114,8 +131,7 @@ template<> luabind::scope getLuaBinding<btRigidBody>() {
 	    .def("getFlags", &btRigidBody::getFlags)
 	    .def("computeGyroscopicForce", &btRigidBody::computeGyroscopicForce)
 	    .def("calculateSerializeBufferSize", &btRigidBody::calculateSerializeBufferSize)
-	    ///@TODO figure out how we can bind these appropriately
-	    //.def("serialize", &btRigidBody::serialize)
-	    //.def("serializeSingleObject", &btRigidBody::serializeSingleObject)
+	    .def("serialize", &btRigidBody::serialize)
+	    .def("serializeSingleObject", &btRigidBody::serializeSingleObject)
 	    ;
 }
