@@ -29,6 +29,21 @@
 // Standard includes
 // - none
 
+namespace {
+    const btMatrix3x3& getBasisConst(btTransform const * b) {
+        return b->getBasis();
+    }
+    btMatrix3x3& getBasisNonConst(btTransform * b) {
+        return b->getBasis();
+    }
+
+    const btVector3& getOriginConst(btTransform const * b) {
+        return b->getOrigin();
+    }
+    btVector3& getOriginNonConst(btTransform * b) {
+        return b->getOrigin();
+    }
+}
 
 
 template<> luabind::scope getLuaBinding<btTransform>() {
@@ -40,10 +55,10 @@ template<> luabind::scope getLuaBinding<btTransform>() {
 	    .def(constructor<const btMatrix3x3 &, const btVector3 &>())
 	    .def(constructor<const btTransform &>())
 	    .def("mult", &btTransform::mult)
-	    ///@TODO figure out how we can bind these appropriately, one normal, one const
-	    //.def("getBasis", &btTransform::getBasis)
-	    ///@TODO figure out how we can bind these appropriately, one normal, one const
-	    //.def("getOrigin", &btTransform::getOrigin)
+	    .def("getBasis", &getBasisConst)
+	    .def("getBasis", &getBasisNonConst)
+	    .def("getOrigin", &getOriginConst)
+	    .def("getOrigin", &getOriginNonConst)
 	    .def("getRotation", &btTransform::getRotation)
 	    .def("setFromOpenGLMatrix", &btTransform::setFromOpenGLMatrix)
 	    .def("getOpenGLMatrix", &btTransform::getOpenGLMatrix)

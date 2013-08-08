@@ -27,12 +27,35 @@
 #include <BulletCollision/CollisionDispatch/btCollisionConfiguration.h>
 #include <BulletCollision/BroadphaseCollision/btCollisionAlgorithm.h>
 #include <BulletCollision/BroadphaseCollision/btOverlappingPairCache.h>
+#include <LinearMath/btPoolAllocator.h>
 
 
 // Standard includes
 // - none
 
 
+namespace {
+    const btPersistentManifold* getManifoldByIndexInternalConst(btCollisionDispatcher const * b, int index) {
+        return b->getManifoldByIndexInternal(index);
+    }
+    btPersistentManifold* getManifoldByIndexInternalNonConst(btCollisionDispatcher * b, int index) {
+        return b->getManifoldByIndexInternal(index);
+    }
+
+    const btCollisionConfiguration* getCollisionConfigurationConst(btCollisionDispatcher const * b) {
+        return b->getCollisionConfiguration();
+    }
+    btCollisionConfiguration* getCollisionConfigurationNonConst(btCollisionDispatcher * b) {
+        return b->getCollisionConfiguration();
+    }
+
+    const btPoolAllocator* getInternalManifoldPoolConst(btCollisionDispatcher const * b) {
+        return b->getInternalManifoldPool();
+    }
+    btPoolAllocator* getInternalManifoldPoolNonConst(btCollisionDispatcher * b) {
+        return b->getInternalManifoldPool();
+    }
+}
 
 template<> luabind::scope getLuaBinding<btCollisionDispatcher>() {
 	using namespace luabind;
@@ -45,8 +68,8 @@ template<> luabind::scope getLuaBinding<btCollisionDispatcher>() {
 	    .def("registerCollisionCreateFunc", &btCollisionDispatcher::registerCollisionCreateFunc)
 	    .def("getNumManifolds", &btCollisionDispatcher::getNumManifolds)
 	    .def("getInternalManifoldPointer", &btCollisionDispatcher::getInternalManifoldPointer)
-	    ///@TODO figure out how we can bind these appropriately, two methods one normal and one const
-	    //.def("getManifoldByIndexInternal", &btCollisionDispatcher::getManifoldByIndexInternal)
+	    .def("getManifoldByIndexInternal", &getManifoldByIndexInternalConst)
+	    .def("getManifoldByIndexInternal", &getManifoldByIndexInternalNonConst)
         .def("getNewManifold", &btCollisionDispatcher::getNewManifold)
         .def("releaseManifold", &btCollisionDispatcher::releaseManifold)
         .def("clearManifold", &btCollisionDispatcher::clearManifold)
@@ -54,14 +77,15 @@ template<> luabind::scope getLuaBinding<btCollisionDispatcher>() {
         .def("needsCollision", &btCollisionDispatcher::needsCollision)
         .def("needsResponse", &btCollisionDispatcher::needsResponse)
         .def("dispatchAllCollisionPairs", &btCollisionDispatcher::dispatchAllCollisionPairs)
+        ///@TODO: get this working
         //.def("setNearCallback", &btCollisionDispatcher::setNearCallback)
         //.def("getNearCallback", &btCollisionDispatcher::getNearCallback)
         .def("allocateCollisionAlgorithm", &btCollisionDispatcher::allocateCollisionAlgorithm)
         .def("freeCollisionAlgorithm", &btCollisionDispatcher::freeCollisionAlgorithm)
-        ///@TODO figure out how we can bind these appropriately, two methods one normal and one const
-        //.def("getCollisionConfiguration", &btCollisionDispatcher::getCollisionConfiguration)
+        .def("getCollisionConfiguration", &getCollisionConfigurationConst)
+        .def("getCollisionConfiguration", &getCollisionConfigurationNonConst)
         .def("setCollisionConfiguration", &btCollisionDispatcher::setCollisionConfiguration)
-        ///@TODO figure out how we can bind these appropriately, two methods one normal and one const
-        //.def("getInternalManifoldPool", &btCollisionDispatcher::getInternalManifoldPool)
+        .def("getInternalManifoldPool", &getInternalManifoldPoolConst)
+        .def("getInternalManifoldPool", &getInternalManifoldPoolNonConst)
 	    ;
 }

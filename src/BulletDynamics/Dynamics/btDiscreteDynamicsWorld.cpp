@@ -29,11 +29,28 @@
 #include <BulletDynamics/Dynamics/btRigidBody.h>
 #include <BulletDynamics/ConstraintSolver/btTypedConstraint.h>
 #include <BulletDynamics/Dynamics/btActionInterface.h>
+#include <LinearMath/btSerializer.h>
+#include <BulletCollision/CollisionDispatch/btSimulationIslandManager.h>
 
 // Standard includes
 // - none
 
 
+namespace {
+    const btSimulationIslandManager* getSimulationIslandManagerConst(btDiscreteDynamicsWorld const * b) {
+        return b->getSimulationIslandManager();
+    }
+    btSimulationIslandManager* getSimulationIslandManagerNonConst(btDiscreteDynamicsWorld * b) {
+        return b->getSimulationIslandManager();
+    }
+
+    const btTypedConstraint* getConstraintConst(btDiscreteDynamicsWorld const * b, int index) {
+        return b->getConstraint(index);
+    }
+    btTypedConstraint* getConstraintNonConst(btDiscreteDynamicsWorld * b, int index) {
+        return b->getConstraint(index);
+    }
+}
 
 template<> luabind::scope getLuaBinding<btDiscreteDynamicsWorld>() {
 	using namespace luabind;
@@ -48,14 +65,15 @@ template<> luabind::scope getLuaBinding<btDiscreteDynamicsWorld>() {
 	    .def("removeConstraint", &btDiscreteDynamicsWorld::removeConstraint)
 	    .def("addAction", &btDiscreteDynamicsWorld::addAction)
 	    .def("removeAction", &btDiscreteDynamicsWorld::removeAction)
-	    ///@TODO figure out how we can bind these appropriately, one normal, one const
-	    //.def("getSimulationIsLandManager", &btDiscreteDynamicsWorld::getSimulationIslandManager)
+	    .def("getSimulationIslandManager", &getSimulationIslandManagerConst)
+	    .def("getSimulationIslandManager", &getSimulationIslandManagerNonConst)
 	    .def("getCollisionWorld", &btDiscreteDynamicsWorld::getCollisionWorld)
 	    .def("setGravity", &btDiscreteDynamicsWorld::setGravity)
 	    .def("getGravity", &btDiscreteDynamicsWorld::getGravity)
 	    .def("addCollisionObject", &btDiscreteDynamicsWorld::addCollisionObject)
-	    ///@TODO this has two methods available, how to bind this?
-	    //.def("addRigidBody", &btDiscreteDynamicsWorld::addRigidBody)
+	    //http://www.rasterbar.com/products/luabind/docs.html#overloaded-functions
+	    .def("addRigidBody", (void(btDiscreteDynamicsWorld::*)(btRigidBody*)) &btDiscreteDynamicsWorld::addRigidBody)
+	    .def("addRigidBody", (void(btDiscreteDynamicsWorld::*)(btRigidBody*, short, short)) &btDiscreteDynamicsWorld::addRigidBody)
 	    .def("removeRigidBody", &btDiscreteDynamicsWorld::removeRigidBody)
 	    .def("removeCollisionObject", &btDiscreteDynamicsWorld::removeCollisionObject)
 	    .def("debugDrawConstraint", &btDiscreteDynamicsWorld::debugDrawConstraint)
@@ -63,8 +81,8 @@ template<> luabind::scope getLuaBinding<btDiscreteDynamicsWorld>() {
 	    .def("setConstraintSolver", &btDiscreteDynamicsWorld::setConstraintSolver)
 	    .def("getConstraintSolver", &btDiscreteDynamicsWorld::getConstraintSolver)
 	    .def("getNumConstraints", &btDiscreteDynamicsWorld::getNumConstraints)
-	    ///@TODO figure out how we can bind these appropriately, one normal, one const
-	    //.def("getConstraint", &btDiscreteDynamicsWorld::getCollisionWorld)
+	    .def("getConstraint", &getConstraintConst)
+	    .def("getConstraint", &getConstraintNonConst)
 	    .def("getWorldType", &btDiscreteDynamicsWorld::getWorldType)
 	    .def("clearForces", &btDiscreteDynamicsWorld::clearForces)
 	    .def("applyGravity", &btDiscreteDynamicsWorld::applyGravity)
@@ -78,6 +96,6 @@ template<> luabind::scope getLuaBinding<btDiscreteDynamicsWorld>() {
 	    .def("getSynchronizeAllMotionStates", &btDiscreteDynamicsWorld::getSynchronizeAllMotionStates)
 	    .def("setApplySpeculativeContactRestitution", &btDiscreteDynamicsWorld::setApplySpeculativeContactRestitution)
 	    .def("getApplySpeculativeContactRestitution", &btDiscreteDynamicsWorld::getApplySpeculativeContactRestitution)
-	    //.def("serialize", &btDiscreteDynamicsWorld::serialize)
+	    .def("serialize", &btDiscreteDynamicsWorld::serialize)
 	    ;
 }
