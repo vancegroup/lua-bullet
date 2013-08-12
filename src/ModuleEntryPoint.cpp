@@ -29,26 +29,33 @@
 
 //Forward declare all the things we need
 //Bullet:
-class btBoxShape;
+//Linear Math
 class btVector3;
-class btBoxShape;
-class btRigidBody;
-class btDefaultCollisionConfiguration;
-class btCollisionDispatcher;
-class btSequentialImpulseConstraintSolver;
-class btAxisSweep3;
-class btDiscreteDynamicsWorld;
 class btTransform;
+//BulletDynamics
+class btSequentialImpulseConstraintSolver;
+class btDiscreteDynamicsWorld;
+class btRigidBody;
+//BulletCollision
+class btAxisSweep3;
 class btBroadphaseProxy;
+class btCollisionDispatcher;
+class btDefaultCollisionConfiguration;
+class btBoxShape;
 class btCompoundShape;
 //osgBullet:
 namespace osgbDynamics{
     class CreationRecord;
     class MotionState;
+    class PhysicsData;
+    class PhysicsState;
     class PhysicsThread;
 }
 namespace osgbCollision{
+    class CollectVerticesVisitor;
+    class ComputeCylinderVisitor;
     class ComputeShapeVisitor;
+    class ComputeTriMeshVisitor;
 }
 
 // Standard includes
@@ -82,6 +89,8 @@ int luaopen_luabullet(lua_State *L) {
         //osgBullet
 	    getLuaBinding<osgbDynamics::CreationRecord>(),
 	    getLuaBinding<osgbDynamics::MotionState>(),
+	    getLuaBinding<osgbDynamics::PhysicsData>(),
+	    getLuaBinding<osgbDynamics::PhysicsState>(),
 	    getLuaBinding<osgbDynamics::PhysicsThread>(),
 
 	    scope() // trailing empty scope so we can put commas after each binding call
@@ -89,7 +98,10 @@ int luaopen_luabullet(lua_State *L) {
     module(L, "osgbCollision")
 	[
         //osgBullet
+        getLuaBinding<osgbCollision::CollectVerticesVisitor>(),
+        getLuaBinding<osgbCollision::ComputeCylinderVisitor>(),
 	    getLuaBinding<osgbCollision::ComputeShapeVisitor>(),
+	    getLuaBinding<osgbCollision::ComputeTriMeshVisitor>(),
 
 	    scope() // trailing empty scope so we can put commas after each binding call
 	];
