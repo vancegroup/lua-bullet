@@ -25,11 +25,33 @@
 
 #include <BulletCollision/CollisionShapes/btCompoundShape.h>
 #include <LinearMath/btSerializer.h>
+#include <BulletCollision/BroadphaseCollision/btDbvt.h>
 
 // Standard includes
 // - none
 
+namespace {
+    const btCollisionShape* getChildShapeConst(btCompoundShape const * b, int index) {
+        return b->getChildShape(index);
+    }
+    btCollisionShape* getChildShapeNonConst(btCompoundShape * b, int index) {
+        return b->getChildShape(index);
+    }
 
+    const btTransform& getChildTransformConst(btCompoundShape const * b, int index) {
+        return b->getChildTransform(index);
+    }
+    btTransform& getChildTransformNonConst(btCompoundShape * b, int index) {
+        return b->getChildTransform(index);
+    }
+
+    const btDbvt* getDynamicAabbTreeConst(btCompoundShape const * b) {
+        return b->getDynamicAabbTree();
+    }
+    btDbvt* getDynamicAabbTreeNonConst(btCompoundShape * b) {
+        return b->getDynamicAabbTree();
+    }
+}
 
 template<> luabind::scope getLuaBinding<btCompoundShape>() {
 	using namespace luabind;
@@ -41,10 +63,10 @@ template<> luabind::scope getLuaBinding<btCompoundShape>() {
 	    .def("removeChildShape", &btCompoundShape::removeChildShape)
 	    .def("removeChildShapeByIndex", &btCompoundShape::removeChildShapeByIndex)
 	    .def("getNumChildShapes", &btCompoundShape::getNumChildShapes)
-	    ///@TODO figure out how we can bind these appropriately, one normal, one const
-	    //.def("getChildShape", &btCompoundShape::getChildShape)
-	    ///@TODO figure out how we can bind these appropriately, one normal, one const
-	    //.def("getChildTransform", &btCompoundShape::getChildTransform)
+	    .def("getChildShape", &getChildShapeConst)
+	    .def("getChildShape", &getChildShapeNonConst)
+	    .def("getChildTransform", &getChildTransformConst)
+	    .def("getChildTransform", &getChildTransformNonConst)
 	    .def("updateChildTransform", &btCompoundShape::updateChildTransform)
 	    .def("getChildList", &btCompoundShape::getChildList)
 	    .def("getAabb", &btCompoundShape::getAabb)
@@ -55,8 +77,8 @@ template<> luabind::scope getLuaBinding<btCompoundShape>() {
 	    .def("setMargin", &btCompoundShape::setMargin)
 	    .def("getMargin", &btCompoundShape::getMargin)
 	    .def("getName", &btCompoundShape::getName)
-	    ///@TODO figure out how we can bind these appropriately, one normal, one const
-	    //.def("getDynamicAabbTree", &btCompoundShape::getDynamicAabbTree)
+	    .def("getDynamicAabbTree", &getDynamicAabbTreeConst)
+	    .def("getDynamicAabbTree", &getDynamicAabbTreeNonConst)
 	    .def("createAabbTreeFromChildren", &btCompoundShape::createAabbTreeFromChildren)
 	    .def("calculatePrincipalAxisTransform", &btCompoundShape::calculatePrincipalAxisTransform)
 	    .def("getUpdateRevision", &btCompoundShape::getUpdateRevision)

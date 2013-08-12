@@ -29,7 +29,14 @@
 // Standard includes
 // - none
 
-
+namespace {
+    const osg::Transform* getTransformConst(osgbDynamics::MotionState const * b) {
+        return b->getTransform();
+    }
+    osg::Transform* getTransformNonConst(osgbDynamics::MotionState * b) {
+        return b->getTransform();
+    }
+}
 
 template<> luabind::scope getLuaBinding<osgbDynamics::MotionState>() {
 	using namespace luabind;
@@ -44,8 +51,8 @@ template<> luabind::scope getLuaBinding<osgbDynamics::MotionState>() {
 	    .def("computeOsgWorldToCOLocal", &osgbDynamics::MotionState::computeOsgWorldToCOLocal)
 	    .def("computeOsgWorldToBulletWorld", &osgbDynamics::MotionState::computeOsgWorldToBulletWorld)
 	    .def("setTransform", &osgbDynamics::MotionState::setTransform)
-	    ///@TODO figure out how we can bind these appropriately, one normal, one const
-	    //.def("getTransform", &osgbDynamics::MotionState::getTransform)
+	    .def("getTransform", &getTransformConst)
+	    .def("getTransform", &getTransformNonConst)
 	    .def("setParentTransform", &osgbDynamics::MotionState::setParentTransform)
 	    .def("getParentTransform", &osgbDynamics::MotionState::getParentTransform)
 	    .def("setCenterOfMass", &osgbDynamics::MotionState::setCenterOfMass)

@@ -29,7 +29,14 @@
 // Standard includes
 // - none
 
-
+namespace {
+    const btCollisionShape* getShapeConst(osgbCollision::ComputeShapeVisitor const * b) {
+        return b->getShape();
+    }
+    btCollisionShape* getShapeNonConst(osgbCollision::ComputeShapeVisitor * b) {
+        return b->getShape();
+    }
+}
 
 template<> luabind::scope getLuaBinding<osgbCollision::ComputeShapeVisitor>() {
 	using namespace luabind;
@@ -43,7 +50,7 @@ template<> luabind::scope getLuaBinding<osgbCollision::ComputeShapeVisitor>() {
 	    //.def("apply", (void(*)(osg::Node))&osgbCollision::ComputeShapeVisitor::apply)
 	    //.def("apply", (void(*)(osg::Transform))&osgbCollision::ComputeShapeVisitor::apply)
 	    //.def("apply", (void(*)(osg::Geode))&osgbCollision::ComputeShapeVisitor::apply)
-	    ///@TODO figure out how we can bind these appropriately, one normal, one const
-	    //.def("getShape", &osgbCollision::ComputeShapeVisitor::getShape)
+	    .def("getShape", &getShapeConst)
+	    .def("getShape", &getShapeNonConst)
 	    ;
 }
