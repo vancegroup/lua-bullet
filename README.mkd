@@ -1,7 +1,7 @@
 lua-bullet
 ==========
 
-Lua binding to [http://bulletphysics.org](Bullet) and [osgBullet](https://code.google.com/p/osgbullet/).
+Lua binding to [Bullet](http://bulletphysics.org) and [osgBullet](https://code.google.com/p/osgbullet/).
 
 https://github.com/vancegroup/lua-bullet
 
@@ -24,19 +24,20 @@ Getting the Source
     git clone --recursive https://github.com/vancegroup/lua-bullet.git
     
 The recursive parameter will also fetch the submodule dependencies.  You can also do it manually with:
+
     git submodule update --init --recursive
 
 Building
 ------------------
 
-Use CMake.  Use CMAKE_PREFIX_PATH to specify a custom install location for OSG if you
+Uses [CMake](http://www.cmake.org).  Set `CMAKE_PREFIX_PATH` to specify a custom install location for OSG if you
 don't have one installed system wide.
 
 The following dependencies will be checked out and built as submodules:
 
-* Bullet
-* osgBullet
-* osgWorks
+* [Bullet](http://bulletphysics.org)
+* [osgBullet](https://code.google.com/p/osgbullet/)
+* [osgWorks](https://code.google.com/p/osgworks/)
 
 Licenses
 --------
@@ -97,3 +98,61 @@ Licenses
 > CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 > TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 > SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+### Bullet - ZLib License
+
+> Bullet Continuous Collision Detection and Physics Library
+> Copyright &copy 2003-2011 Erwin Coumans  http://bulletphysics.org
+>
+> This software is provided 'as-is', without any express or implied warranty.
+> In no event will the authors be held liable for any damages arising from the use of this software.
+> Permission is granted to anyone to use this software for any purpose,
+> including commercial applications, and to alter it and redistribute it freely,
+> subject to the following restrictions:
+>
+> 1. The origin of this software must not be misrepresented; you must not claim that you wrote the original software. If you use this software in a product, an acknowledgment in the product documentation would be appreciated but is not required.
+> 2. Altered source versions must be plainly marked as such, and must not be misrepresented as being the original software.
+> 3. This notice may not be removed or altered from any source distribution.
+>
+> All files in the Bullet/src folder are under this Zlib license.
+> Files in the Extras and Demos folder may have a different license, see the respective files.
+
+### osgBullet - GNU Lesser General Public License
+
+https://www.gnu.org/licenses/lgpl.html
+
+> osgBullet is &copy Copyright 2009-2012 by Kenneth Mark Bryden
+>
+> This library is free software; you can redistribute it and/or
+> modify it under the terms of the GNU Lesser General Public
+> License version 2.1 as published by the Free Software Foundation.
+>
+> This library is distributed in the hope that it will be useful,
+> but WITHOUT ANY WARRANTY; without even the implied warranty of
+> MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+> Library General Public License for more details.
+>
+> You should have received a copy of the GNU Lesser General Public
+> License along with this library; if not, write to the
+> Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+> Boston, MA 02111-1307, USA.
+
+### osgWorks - GNU Lesser General Public License
+
+https://www.gnu.org/licenses/lgpl.html
+
+> osgWorks is &copy Copyright 2009-2012 by Kenneth Mark Bryden
+>
+> This library is free software; you can redistribute it and/or
+> modify it under the terms of the GNU Lesser General Public
+> License version 2.1 as published by the Free Software Foundation.
+>
+> This library is distributed in the hope that it will be useful,
+> but WITHOUT ANY WARRANTY; without even the implied warranty of
+> MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+> Library General Public License for more details.
+>
+> You should have received a copy of the GNU Lesser General Public
+> License along with this library; if not, write to the
+> Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+> Boston, MA 02111-1307, USA.
