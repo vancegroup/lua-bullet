@@ -57,6 +57,8 @@ set(OSGBULLET_BINDING
 	osgbDynamics/CreationRecord.cpp
 	osgbDynamics/MotionState.cpp
 	osgbDynamics/PhysicsThread.cpp
+	osgbDynamics/PhysicsState.cpp
+	osgbDynamics/PhysicsData.cpp
 	osgbCollision/ComputeShapeVisitor.cpp
 	osgbCollision/ComputeTriMeshVisitor.cpp
 	osgbCollision/CollectVerticesVisitor.cpp
