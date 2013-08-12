@@ -102,7 +102,7 @@ Licenses
 ### Bullet - ZLib License
 
 > Bullet Continuous Collision Detection and Physics Library
-> Copyright &copy 2003-2011 Erwin Coumans  http://bulletphysics.org
+> Copyright &copy; 2003-2011 Erwin Coumans  http://bulletphysics.org
 >
 > This software is provided 'as-is', without any express or implied warranty.
 > In no event will the authors be held liable for any damages arising from the use of this software.
@@ -121,7 +121,7 @@ Licenses
 
 https://www.gnu.org/licenses/lgpl.html
 
-> osgBullet is &copy Copyright 2009-2012 by Kenneth Mark Bryden
+> osgBullet is &copy; Copyright 2009-2012 by Kenneth Mark Bryden
 >
 > This library is free software; you can redistribute it and/or
 > modify it under the terms of the GNU Lesser General Public
@@ -141,7 +141,7 @@ https://www.gnu.org/licenses/lgpl.html
 
 https://www.gnu.org/licenses/lgpl.html
 
-> osgWorks is &copy Copyright 2009-2012 by Kenneth Mark Bryden
+> osgWorks is &copy; Copyright 2009-2012 by Kenneth Mark Bryden
 >
 > This library is free software; you can redistribute it and/or
 > modify it under the terms of the GNU Lesser General Public
