@@ -36,6 +36,7 @@ set(SOURCES
 	LuaInterface.h
 	ModuleEntryPoint.cpp
 	ModuleEntryPoint.h
+	Version.h
 )
 
 set(OSGBULLET_BINDING
@@ -103,6 +104,9 @@ endif()
 
 get_filename_component(LUA_LIBDIR "${LUA_LIBRARY}" PATH)
 list(APPEND LIBRARY_DIRS "${LUA_LIBDIR}")
+
+# Copy over Version.h header into install location
+file(COPY "${PROJECT_SOURCE_DIR}/src/Version.h" DESTINATION "${CMAKE_INSTALL_PREFIX}/include/")
 
 
 #For OSX:
