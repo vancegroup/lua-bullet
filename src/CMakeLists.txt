@@ -81,10 +81,10 @@ target_link_libraries(luabullet
 
 add_dependencies(luabullet osgBullet)
 
-
+#http://www.cmake.org/cmake/help/v2.8.11/cmake.html#command:install
 install(TARGETS luabullet
-	RUNTIME DESTINATION ${CMAKE_SHARED_LIBRARY_PREFIX} COMPONENT binding
-	LIBRARY DESTINATION ${CMAKE_SHARED_LIBRARY_PREFIX} COMPONENT binding)
+	RUNTIME DESTINATION bin COMPONENT binding
+	LIBRARY DESTINATION lib COMPONENT binding)
 
 set(LUABULLET_INSTALL_NAME "${CMAKE_INSTALL_PREFIX}/bin/luabullet${CMAKE_SHARED_MODULE_SUFFIX}")
 
