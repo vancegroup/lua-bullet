@@ -37,7 +37,7 @@ template<> luabind::scope getLuaBinding<btVector3>() {
 	return
 	    class_<btVector3> ("btVector3")
 	    .def(constructor<>())
-	    .def(constructor<const btScalar &, const btScalar &, const btScalar &>())
+	    .def(constructor<btScalar, btScalar, btScalar>())
 	    .def("length2", &btVector3::length2)
 	    .def("length", &btVector3::length)
 	    .def("distance2", &btVector3::distance2)
