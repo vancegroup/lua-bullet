@@ -37,7 +37,7 @@ template<> luabind::scope getLuaBinding<btBroadphaseProxy>() {
 	return
 	    class_<btBroadphaseProxy> ("btBroadphaseProxy")
 	    .def(constructor<>())
-	    .def(constructor<const btVector3 &, const btVector3 &, void *, short int, short int, void *>())
+	    .def(constructor<btVector3, btVector3, void *, short int, short int, void *>())
 	    .def("getUid", &btBroadphaseProxy::getUid)
 	    ///@TODO finish binding the rest of the properties if they're needed
 	    .property("m_uniqueId", &btBroadphaseProxy::m_uniqueId)

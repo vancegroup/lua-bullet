@@ -51,9 +51,9 @@ template<> luabind::scope getLuaBinding<btTransform>() {
 
 	return
 	    class_<btTransform> ("btTransform")
-	    .def(constructor<const btQuaternion &, const btVector3 &>())
-	    .def(constructor<const btMatrix3x3 &, const btVector3 &>())
-	    .def(constructor<const btTransform &>())
+	    .def(constructor<btQuaternion, btVector3>())
+	    .def(constructor<btMatrix3x3, btVector3>())
+	    .def(constructor<btTransform>())
 	    .def("mult", &btTransform::mult)
 	    .def("getBasis", &getBasisConst)
 	    .def("getBasis", &getBasisNonConst)

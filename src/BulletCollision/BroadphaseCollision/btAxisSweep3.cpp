@@ -35,6 +35,6 @@ template<> luabind::scope getLuaBinding<btAxisSweep3>() {
 
 	return
 	    class_<btAxisSweep3> ("btAxisSweep3")
-	    .def(constructor<const btVector3 &, const btVector3 &, unsigned short int, btOverlappingPairCache *, bool>())
+	    .def(constructor<btVector3, btVector3, unsigned short int, btOverlappingPairCache *, bool>())
 	    ;
 }
