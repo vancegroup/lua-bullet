@@ -40,6 +40,15 @@ The following dependencies will be checked out and built as submodules:
 * [osgBullet](https://code.google.com/p/osgbullet/)
 * [osgWorks](https://code.google.com/p/osgworks/)
 
+
+Testing
+------------------
+
+Uses [CTest](http://cmake.org/Wiki/CMake/Testing_With_CTest).
+
+Run `make test` or `ctest -V` for verbose testing output.
+
+
 Licenses
 --------
 
