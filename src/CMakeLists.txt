@@ -64,6 +64,8 @@ set(OSGBULLET_BINDING
 	osgbCollision/ComputeTriMeshVisitor.cpp
 	osgbCollision/CollectVerticesVisitor.cpp
 	osgbCollision/ComputeCylinderVisitor.cpp
+	osgbCollision/CollisionShapes.cpp
+	osgbCollision/CollisionShapes.h
 )
 
 add_library(luabullet MODULE ${SOURCES} ${OSGBULLET_BINDING})
