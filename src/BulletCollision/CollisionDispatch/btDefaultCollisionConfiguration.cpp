@@ -45,5 +45,16 @@ template<> luabind::scope getLuaBinding<btDefaultCollisionConfiguration>() {
 	    .def("getCollisionAlgorithmCreateFunc", &btDefaultCollisionConfiguration::getCollisionAlgorithmCreateFunc)
 	    .def("setConvexMultipointIterations", &btDefaultCollisionConfiguration::setConvexConvexMultipointIterations)
 	    .def("setPlaneConvexMultipointIterations", &btDefaultCollisionConfiguration::setPlaneConvexMultipointIterations)
+        .scope
+        [
+            class_<btDefaultCollisionConstructionInfo>("btDefaultCollisionConstructionInfo")
+            .def(constructor<>())
+            .def_readwrite("persistentManifoldPool", &btDefaultCollisionConstructionInfo::m_persistentManifoldPool)
+            .def_readwrite("collisionAlgorithmPool", &btDefaultCollisionConstructionInfo::m_collisionAlgorithmPool)
+            .def_readwrite("defaultMaxPersistentManifoldPoolSize", &btDefaultCollisionConstructionInfo::m_defaultMaxPersistentManifoldPoolSize)
+            .def_readwrite("defaultMaxCollisionAlgorithmPoolSize", &btDefaultCollisionConstructionInfo::m_defaultMaxCollisionAlgorithmPoolSize)
+            .def_readwrite("customCollisionAlgorithmMaxElementSize", &btDefaultCollisionConstructionInfo::m_customCollisionAlgorithmMaxElementSize)
+            .def_readwrite("useEpaPenetrationAlgorithm", &btDefaultCollisionConstructionInfo::m_useEpaPenetrationAlgorithm)
+        ];
 	    ;
 }
