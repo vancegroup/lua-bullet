@@ -1,6 +1,6 @@
 /**
 	@file
-	@brief Implementation
+	@brief Header
 
 	@date 2013
 
@@ -18,23 +18,32 @@
 
 
 // Internal Includes
-#include "../../BindingFwd.h"
 
 // Library/third-party includes
 #include <luabind/class.hpp>
 
-#include <BulletCollision/BroadphaseCollision/btAxisSweep3.h>
+#include <osgbCollision/CollisionShapes.h>
 
 // Standard includes
 // - none
 
 
 
-template<> luabind::scope getLuaBinding<btAxisSweep3>() {
-	using namespace luabind;
 
-	return
-	    class_<btAxisSweep3> ("btAxisSweep3")
-	    .def(constructor<btVector3, btVector3, unsigned short int, btOverlappingPairCache *, bool>())
-	    ;
-}
+luabind::scope btSphereCollisionShapeFromOSG();
+
+luabind::scope btBoxCollisionShapeFromOSG();
+
+luabind::scope btCylinderCollisionShapeFromOSG();
+
+luabind::scope btTriMeshCollisionShapeFromOSG();
+
+luabind::scope btConvexTriMeshCollisionShapeFromOSG();
+
+luabind::scope btConvexHullCollisionShapeFromOSG();
+
+luabind::scope btCompoundShapeFromOSGGeodes();
+
+luabind::scope btCompoundShapeFromOSGGeometry();
+
+luabind::scope btCompoundShapeFromBounds();

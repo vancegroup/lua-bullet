@@ -23,9 +23,11 @@
 #include "BindingFwd.h"
 #include "ClassInfo.h"
 
+#include "osgbCollision/CollisionShapes.h"
 
 // Library/third-party includes
 #include <luabind/open.hpp>
+
 
 //Forward declare all the things we need
 //Bullet:
@@ -70,7 +72,6 @@ int luaopen_luabullet(lua_State *L) {
 	[
         //bullet
 	    getLuaBinding<btVector3>(),
-	    //getLuaBinding<btCollisionShape>(),
 	    getLuaBinding<btBoxShape>(),
 	    getLuaBinding<btRigidBody>(),
 	    getLuaBinding<btDefaultCollisionConfiguration>(),
@@ -102,6 +103,15 @@ int luaopen_luabullet(lua_State *L) {
         getLuaBinding<osgbCollision::ComputeCylinderVisitor>(),
 	    getLuaBinding<osgbCollision::ComputeShapeVisitor>(),
 	    getLuaBinding<osgbCollision::ComputeTriMeshVisitor>(),
+	    btSphereCollisionShapeFromOSG(),
+	    btBoxCollisionShapeFromOSG(),
+	    btCylinderCollisionShapeFromOSG(),
+	    btTriMeshCollisionShapeFromOSG(),
+	    btConvexTriMeshCollisionShapeFromOSG(),
+	    btConvexHullCollisionShapeFromOSG(),
+	    btCompoundShapeFromOSGGeodes(),
+	    btCompoundShapeFromOSGGeometry(),
+	    btCompoundShapeFromBounds(),
 
 	    scope() // trailing empty scope so we can put commas after each binding call
 	];

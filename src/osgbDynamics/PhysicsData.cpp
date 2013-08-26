@@ -37,7 +37,7 @@ template<> luabind::scope getLuaBinding<osgbDynamics::PhysicsData>() {
 	    class_<osgbDynamics::PhysicsData> ("PhysicsData")
 	    ///@TODO: figure out how to deal with the protected destructor
 	    //.def(constructor<>())
-	    //.def(constructor<const osgbDynamics::PhysicsData&, osg::CopyOp>())
+	    //.def(constructor<osgbDynamics::PhysicsData, osg::CopyOp>())
 	    .def("loadState", &osgbDynamics::PhysicsData::loadState)
 	    .def("restoreState", &osgbDynamics::PhysicsData::restoreState)
 	    .def("getVersion", &osgbDynamics::PhysicsData::getVersion)

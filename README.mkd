@@ -14,6 +14,7 @@ You will need the following:
 * [OSG](http://www.openscenegraph.org/).  We use [this one](https://github.com/rpavlik/osg).
 * [Lua](http://www.lua.org/)
 * [luabind](http://www.rasterbar.com/products/luabind.html).  We use [this one](https://github.com/rpavlik/luabind).
+* [Boost](http://www.boost.org/)
 
 
 
@@ -38,6 +39,15 @@ The following dependencies will be checked out and built as submodules:
 * [Bullet](http://bulletphysics.org)
 * [osgBullet](https://code.google.com/p/osgbullet/)
 * [osgWorks](https://code.google.com/p/osgworks/)
+
+
+Testing
+------------------
+
+Uses [CTest](http://cmake.org/Wiki/CMake/Testing_With_CTest).
+
+Run `make test` or `ctest -V` for verbose testing output.
+
 
 Licenses
 --------

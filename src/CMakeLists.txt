@@ -65,6 +65,8 @@ set(OSGBULLET_BINDING
 	osgbCollision/ComputeTriMeshVisitor.cpp
 	osgbCollision/CollectVerticesVisitor.cpp
 	osgbCollision/ComputeCylinderVisitor.cpp
+	osgbCollision/CollisionShapes.cpp
+	osgbCollision/CollisionShapes.h
 )
 
 add_library(luabullet MODULE ${SOURCES} ${OSGBULLET_BINDING})
@@ -78,16 +80,17 @@ target_link_libraries(luabullet
 	"${BULLET_INSTALL_DIR}/lib/${CMAKE_SHARED_LIBRARY_PREFIX}LinearMath${CMAKE_SHARED_LIBRARY_SUFFIX}"
 	"${BULLET_INSTALL_DIR}/lib/${CMAKE_SHARED_LIBRARY_PREFIX}BulletSoftBody${CMAKE_SHARED_LIBRARY_SUFFIX}"
 	"${OSGBULLET_INSTALL_DIR}/lib/${CMAKE_SHARED_LIBRARY_PREFIX}osgbCollision${CMAKE_SHARED_LIBRARY_SUFFIX}"
-	"${OSGBULLET_INSTALL_DIR}/lib/${CMAKE_SHARED_LIBRARY_PREFIX}osgbDynamics${CMAKE_SHARED_LIBRARY_SUFFIX}")
+	"${OSGBULLET_INSTALL_DIR}/lib/${CMAKE_SHARED_LIBRARY_PREFIX}osgbDynamics${CMAKE_SHARED_LIBRARY_SUFFIX}"
+	"${OSGWORKS_INSTALL_DIR}/lib/${CMAKE_SHARED_LIBRARY_PREFIX}osgwTools${CMAKE_SHARED_LIBRARY_SUFFIX}")
 
 add_dependencies(luabullet osgBullet)
 
-
+#http://www.cmake.org/cmake/help/v2.8.11/cmake.html#command:install
 install(TARGETS luabullet
-	RUNTIME DESTINATION ${CMAKE_SHARED_LIBRARY_PREFIX} COMPONENT binding
-	LIBRARY DESTINATION ${CMAKE_SHARED_LIBRARY_PREFIX} COMPONENT binding)
+	RUNTIME DESTINATION bin COMPONENT binding
+	LIBRARY DESTINATION lib COMPONENT binding)
 
-set(LUABULLET_INSTALL_NAME "${CMAKE_INSTALL_PREFIX}/bin/luabullet${CMAKE_SHARED_MODULE_SUFFIX}")
+set(LUABULLET_INSTALL_NAME "${CMAKE_INSTALL_PREFIX}/bin/${CMAKE_SHARED_LIBRARY_PREFIX}luabullet${CMAKE_SHARED_MODULE_SUFFIX}")
 
 set(APP)
 set(PLUGINS)

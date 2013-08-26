@@ -12,12 +12,15 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 find_package(OpenSceneGraph REQUIRED COMPONENTS osgGA osgText osgViewer osgSim osgDB osgShadow osgUtil osg OpenThreads)
 find_package(Boost REQUIRED)
 find_package(Luabind REQUIRED)
-find_program(LUA_COMMAND lua lua5.1)
-
-message(STATUS "Make sure CMAKE_INSTALL_PREFIX is set and has appropriate permissions.")
+find_program(LUA_COMMAND vrjlua lua lua5.1)
 
 include(GNUInstallDirs)
+include(CTest)
 
 add_subdirectory(submodules) #dependencies (osgWorks, Bullet, osgBullet)
 
 add_subdirectory(src)
+
+if(BUILD_TESTING)
+	add_subdirectory(tests)
+endif()

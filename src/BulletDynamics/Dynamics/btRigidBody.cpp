@@ -59,14 +59,30 @@ template<> luabind::scope getLuaBinding<btRigidBody>() {
 
 	return
 	    class_<btRigidBody> ("btRigidBody")
-	    .def(constructor<const btRigidBody::btRigidBodyConstructionInfo &>())
-	    .def(constructor<btScalar, btMotionState *, btCollisionShape *, const btVector3 &>())
-	    ///@TODO: figure out how to bind this struct appropriately
-	    /*.scope
+	    .def(constructor<btRigidBody::btRigidBodyConstructionInfo>())
+	    .def(constructor<btScalar, btMotionState *, btCollisionShape *, btVector3>())
+	    .scope
         [
-            class_<btRigidBodyConstructionInfo>("btRigidBodyConstructionInfo"),
-            def(constructor<btScalar, btMotionState*, btCollisionState*, const btVector3&>())
-        ];*/
+            class_<btRigidBody::btRigidBodyConstructionInfo>("btRigidBodyConstructionInfo")
+            .def(constructor<btScalar, btMotionState*, btCollisionShape*, btVector3>())
+            .def_readwrite("mass", &btRigidBody::btRigidBodyConstructionInfo::m_mass)
+            .def_readwrite("motionState", &btRigidBody::btRigidBodyConstructionInfo::m_motionState)
+            .def_readwrite("startWorldTransform", &btRigidBody::btRigidBodyConstructionInfo::m_startWorldTransform)
+            .def_readwrite("collisionShape", &btRigidBody::btRigidBodyConstructionInfo::m_collisionShape)
+            .def_readwrite("localInertia", &btRigidBody::btRigidBodyConstructionInfo::m_localInertia)
+            .def_readwrite("linearDamping", &btRigidBody::btRigidBodyConstructionInfo::m_linearDamping)
+            .def_readwrite("angularDamping", &btRigidBody::btRigidBodyConstructionInfo::m_angularDamping)
+            .def_readwrite("friction", &btRigidBody::btRigidBodyConstructionInfo::m_friction)
+            .def_readwrite("rollingFriction", &btRigidBody::btRigidBodyConstructionInfo::m_rollingFriction)
+            .def_readwrite("restitution", &btRigidBody::btRigidBodyConstructionInfo::m_restitution)
+            .def_readwrite("linearSleepingThreshold", &btRigidBody::btRigidBodyConstructionInfo::m_linearSleepingThreshold)
+            .def_readwrite("angularSleepingThreshold", &btRigidBody::btRigidBodyConstructionInfo::m_angularSleepingThreshold)
+            .def_readwrite("additionalDamping", &btRigidBody::btRigidBodyConstructionInfo::m_additionalDamping)
+            .def_readwrite("additionalDampingFactor", &btRigidBody::btRigidBodyConstructionInfo::m_additionalAngularDampingFactor)
+            .def_readwrite("additionalLinearDampingThresholdSqr", &btRigidBody::btRigidBodyConstructionInfo::m_additionalLinearDampingThresholdSqr)
+            .def_readwrite("additionalAngularDampingThresholdSqr", &btRigidBody::btRigidBodyConstructionInfo::m_additionalAngularDampingThresholdSqr)
+            .def_readwrite("additionalAngularDampingFactor", &btRigidBody::btRigidBodyConstructionInfo::m_additionalAngularDampingFactor)
+        ]
 	    .def("proceedToTransform", &btRigidBody::proceedToTransform)
 	    .def("predictIntegratedTransform", &btRigidBody::predictIntegratedTransform)
 	    .def("saveKinematicsState", &btRigidBody::saveKinematicState)
