@@ -6,7 +6,7 @@
 	url = https://github.com/carlsonp/osgWorks.git
 [submodule "submodules/bullet"]
 	path = submodules/bullet
-	url = https://github.com/vancegroup-mirrors/bullet-physics.git
+	url = https://github.com/carlsonp/bullet-physics.git
 [submodule "submodules/osgbullet"]
 	path = submodules/osgbullet
 	url = https://github.com/carlsonp/osgBullet.git
