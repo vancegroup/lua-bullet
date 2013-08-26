@@ -40,9 +40,11 @@ template<> luabind::scope getLuaBinding<btBroadphaseProxy>() {
 	    .def(constructor<const btVector3 &, const btVector3 &, void *, short int, short int, void *>())
 	    .def("getUid", &btBroadphaseProxy::getUid)
 	    ///@TODO finish binding the rest of the properties if they're needed
-	    .property("m_uniqueId", &btBroadphaseProxy::m_uniqueId)
-	    .property("m_aabbMin", &btBroadphaseProxy::m_aabbMin)
-	    .property("m_aabbMax", &btBroadphaseProxy::m_aabbMax)
+		/*
+	    .def_readwrite("m_uniqueId", &btBroadphaseProxy::m_uniqueId)
+	    .def_readwrite("m_aabbMin", &btBroadphaseProxy::m_aabbMin)
+	    .def_readwrite("m_aabbMax", &btBroadphaseProxy::m_aabbMax)
+		*/
 	    //http://www.rasterbar.com/products/luabind/docs.html#enums
 	    //add binding for various enums
 	    ///@TODO is this the correct way to bind these enums since they're global?
