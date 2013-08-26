@@ -11,7 +11,8 @@ include_directories(${LUABIND_INCLUDE_DIRS}
 	${OPENSCENEGRAPH_INCLUDE_DIR}
 	"${OSGWORKS_INSTALL_DIR}/include"
 	"${BULLET_INSTALL_DIR}/include/bullet"
-	"${OSGBULLET_INSTALL_DIR}/include")
+	"${OSGBULLET_INSTALL_DIR}/include"
+	${Boost_INCLUDE_DIRS})
 
 add_definitions(-DLUABULLET_BUILDING)
 
