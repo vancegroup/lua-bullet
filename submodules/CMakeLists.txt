@@ -58,6 +58,12 @@ ExternalProject_Add(
 #				-DPKGCONFIG_INSTALL_PREFIX:PATH=${CMAKE_INSTALL_PREFIX}
 #				-DINCLUDE_INSTALL_DIR:PATH=${CMAKE_INSTALL_PREFIX}/include/
 #				-DLIB_DESTINATION:PATH=${CMAKE_INSTALL_PREFIX}/lib/
+
+				# Workaround inadequate find scripts.
+				# This will let us find the static libs (.lib) on Windows since Bullet doesn't name them nicely
+				-DCMAKE_DEBUG_POSTFIX=
+				-DCMAKE_MINSIZEREL_POSTFIX=
+				-DCMAKE_RELWITHDEBINFO_POSTFIX=
 )
 
 
