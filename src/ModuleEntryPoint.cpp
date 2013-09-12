@@ -47,7 +47,7 @@ class btBoxShape;
 class btCompoundShape;
 //osgBullet:
 namespace osgbDynamics{
-    class CreationRecord;
+    struct CreationRecord;
     class MotionState;
     class PhysicsData;
     class PhysicsState;

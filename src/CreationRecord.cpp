@@ -28,10 +28,6 @@
 // Standard includes
 // - none
 
-namespace osgbDynamics {
-	class CreationRecord;
-}
-
 template<> luabind::scope getLuaBinding<osgbDynamics::CreationRecord>() {
 	using namespace luabind;
 
