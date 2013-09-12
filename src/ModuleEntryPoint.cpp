@@ -40,7 +40,7 @@ class btDiscreteDynamicsWorld;
 class btRigidBody;
 //BulletCollision
 class btAxisSweep3;
-class btBroadphaseProxy;
+struct btBroadphaseProxy;
 class btCollisionDispatcher;
 class btDefaultCollisionConfiguration;
 class btBoxShape;
