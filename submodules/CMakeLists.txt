@@ -52,6 +52,9 @@ ExternalProject_Add(
 				-DBUILD_EXTRAS:BOOL=OFF
 				-DBUILD_UNIT_TESTS:BOOL=OFF
 				#-DBUILD_SHARED_LIBS:BOOL=OFF  # this is broken in Visual Studio
+				# Add -fPIC on Linux so we can actually link into a shared lib later
+				"-DCMAKE_CXX_FLAGS=${CMAKE_SHARED_LIBRARY_CXX_FLAGS}"
+				"-DCMAKE_C_FLAGS=${CMAKE_SHARED_LIBRARY_C_FLAGS}"
 				-DINSTALL_LIBS:BOOL=ON
 				-DBUILD_MULTITHREADING:BOOL=ON
 				-DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR>
