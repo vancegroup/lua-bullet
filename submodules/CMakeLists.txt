@@ -51,6 +51,7 @@ ExternalProject_Add(
 				-DUSE_GRAPHICAL_BENCHMARK:BOOL=OFF
 				-DBUILD_EXTRAS:BOOL=OFF
 				-DBUILD_UNIT_TESTS:BOOL=OFF
+				-DUSE_MSVC_RUNTIME_LIBRARY_DLL:BOOL=ON
 				#-DBUILD_SHARED_LIBS:BOOL=OFF  # this is broken in Visual Studio
 				# Add -fPIC on Linux so we can actually link into a shared lib later
 				"-DCMAKE_CXX_FLAGS=${CMAKE_SHARED_LIBRARY_CXX_FLAGS}"
