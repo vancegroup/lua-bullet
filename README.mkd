@@ -49,6 +49,8 @@ Uses [CTest](http://cmake.org/Wiki/CMake/Testing_With_CTest).
 
 Run `make test` or `ctest -V` for verbose testing output.
 
+In Visual Studio, right click on RUN_TESTS in the solution on the side and click Build.
+
 
 Licenses
 --------
