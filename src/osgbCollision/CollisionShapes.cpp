@@ -16,7 +16,6 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-
 // Internal Includes
 #include "CollisionShapes.h"
 
@@ -26,6 +25,8 @@
 #include <osgbCollision/CollisionShapes.h>
 
 #include <osg/Node>
+#include <osgLua/Config>
+#include <vrjugglua/osgLuabind.h>
 
 // Standard includes
 // - none
@@ -39,10 +40,19 @@ luabind::scope btSphereCollisionShapeFromOSG()
     return def("btSphereCollisionShapeFromOSG", &osgbCollision::btSphereCollisionShapeFromOSG);
 }
 
+static btBoxShape * btBoxCollisionShapeFromOSGDefault(osg::Node * n) {
+	return osgbCollision::btBoxCollisionShapeFromOSG(n);
+}
+/*static btBoxShape * btBoxCollisionShapeFromNothing() {
+	osg::Node * n = new osg::Node(); /// @todo intentional, temporary leak
+	return osgbCollision::btBoxCollisionShapeFromOSG(n);
+}*/
+
 luabind::scope btBoxCollisionShapeFromOSG()
 {
     using namespace luabind;
-    return def("btBoxCollisionShapeFromOSG", &osgbCollision::btBoxCollisionShapeFromOSG);
+    return def("btBoxCollisionShapeFromOSG", &osgbCollision::btBoxCollisionShapeFromOSG),
+		def("btBoxCollisionShapeFromOSG", &btBoxCollisionShapeFromOSGDefault);
 }
 
 luabind::scope btCylinderCollisionShapeFromOSG()

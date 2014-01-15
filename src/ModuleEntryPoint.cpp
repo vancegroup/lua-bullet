@@ -37,12 +37,16 @@ class btTransform;
 //BulletDynamics
 class btSequentialImpulseConstraintSolver;
 class btDiscreteDynamicsWorld;
+class btConstraintSolver;
 class btRigidBody;
 //BulletCollision
 class btAxisSweep3;
 struct btBroadphaseProxy;
+class btCollisionConfiguration;
+class btBroadphaseInterface;
 class btCollisionDispatcher;
 class btDefaultCollisionConfiguration;
+class btDispatcher;
 class btBoxShape;
 class btCompoundShape;
 //osgBullet:
@@ -71,11 +75,15 @@ int luaopen_luabullet(lua_State *L) {
 	module(L, "bullet")
 	[
         //bullet
+		// Order matters - bases before derived!
 	    getLuaBinding<btVector3>(),
 	    getLuaBinding<btBoxShape>(),
 	    getLuaBinding<btRigidBody>(),
+		getLuaBinding<btConstraintSolver>(),
 	    getLuaBinding<btDefaultCollisionConfiguration>(),
+		getLuaBinding<btDispatcher>(),
 	    getLuaBinding<btCollisionDispatcher>(),
+		getLuaBinding<btBroadphaseInterface>(),
 	    getLuaBinding<btSequentialImpulseConstraintSolver>(),
 	    getLuaBinding<btAxisSweep3>(),
 	    getLuaBinding<btDiscreteDynamicsWorld>(),

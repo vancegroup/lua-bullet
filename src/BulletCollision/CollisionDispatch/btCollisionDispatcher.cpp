@@ -61,7 +61,7 @@ template<> luabind::scope getLuaBinding<btCollisionDispatcher>() {
 	using namespace luabind;
 
 	return
-	    class_<btCollisionDispatcher> ("btCollisionDispatcher")
+	    class_<btCollisionDispatcher, btDispatcher> ("btCollisionDispatcher")
 	    .def(constructor<btCollisionConfiguration *>())
 	    .def("getDispatcherFlags", &btCollisionDispatcher::getDispatcherFlags)
 	    .def("setDispatcherFlags", &btCollisionDispatcher::setDispatcherFlags)

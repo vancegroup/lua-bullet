@@ -23,22 +23,16 @@
 // Library/third-party includes
 #include <luabind/class.hpp>
 
-#include <BulletCollision/BroadphaseCollision/btAxisSweep3.h>
-#include <BulletCollision/BroadphaseCollision/btBroadphaseInterface.h>
+#include <BulletCollision/BroadphaseCollision/btDispatcher.h>
 
 // Standard includes
 // - none
 
 
-
-template<> luabind::scope getLuaBinding<btAxisSweep3>() {
+template<> luabind::scope getLuaBinding<btDispatcher>() {
 	using namespace luabind;
 
 	return
-		class_<btAxisSweep3Internal<unsigned short int> , btBroadphaseInterface> ("btAxisSweep3Internal")
-		,
-	    class_<btAxisSweep3, btAxisSweep3Internal<unsigned short int> > ("btAxisSweep3")
-			.def(constructor<const btVector3 &, const btVector3 &>())
-			.def(constructor<const btVector3 &, const btVector3 &, unsigned short int>())
+		class_<btDispatcher> ("btDispatcher")
 	    ;
 }

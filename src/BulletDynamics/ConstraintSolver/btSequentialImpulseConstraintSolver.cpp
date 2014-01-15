@@ -37,7 +37,7 @@ template<> luabind::scope getLuaBinding<btSequentialImpulseConstraintSolver>() {
 	using namespace luabind;
 
 	return
-	    class_<btSequentialImpulseConstraintSolver> ("btSequentialImpulseConstraintSolver")
+	    class_<btSequentialImpulseConstraintSolver, btConstraintSolver> ("btSequentialImpulseConstraintSolver")
 	    .def(constructor<>())
 	    .def("solveGroup", &btSequentialImpulseConstraintSolver::solveGroup)
 	    .def("reset", &btSequentialImpulseConstraintSolver::reset)
