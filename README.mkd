@@ -40,7 +40,12 @@ The following dependencies will be checked out and built as submodules:
 * [osgBullet](https://code.google.com/p/osgbullet/)
 * [osgWorks](https://code.google.com/p/osgworks/)
 
-vancegroup specific notes: If you are building this to use with VRJuggLua, make sure when you build VRJuggLua to enable BUILD_SHARED_LUABIND and BUILD_SHARED_LUA in CMake and then point to these specific libraries when building lua-bullet.  Copy the luabullet.dll to the VRJuggLua bin directory and then use dependency walker on the DLL to identify any other DLL files that it needs and copy those in as well.
+vancegroup specific notes: If you are building this to use with VRJuggLua, make sure when you build
+VRJuggLua to enable BUILD_SHARED_LUABIND, BUILD_SHARED_LUA, BUILD_SHARED_OSGLUA,
+and INSTALL_CXX_SDK in CMake and then point
+to these specific libraries when building lua-bullet.  Copy the luabullet.dll to the VRJuggLua bin
+directory and then use dependency walker on the DLL to identify any other DLL files that it needs and
+copy those in as well.
 
 Testing
 ------------------
