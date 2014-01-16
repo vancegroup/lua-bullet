@@ -12,6 +12,7 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 find_package(OpenSceneGraph REQUIRED COMPONENTS osgGA osgText osgViewer osgSim osgDB osgShadow osgUtil osg OpenThreads osgIntrospection)
 find_package(Boost REQUIRED)
 find_package(Luabind REQUIRED)
+find_package(osgLua REQUIRED)
 find_program(LUA_COMMAND vrjlua lua lua5.1)
 
 include(GNUInstallDirs)
