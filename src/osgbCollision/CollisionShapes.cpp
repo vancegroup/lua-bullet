@@ -26,7 +26,7 @@
 
 #include <osg/Node>
 #include <osgLua/Config>
-#include <vrjugglua/osgLuabind.h>
+#include <osgLua/osgLuabind>
 
 // Standard includes
 // - none
