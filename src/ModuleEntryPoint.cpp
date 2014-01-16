@@ -28,6 +28,8 @@
 // Library/third-party includes
 #include <luabind/open.hpp>
 
+/// @todo maybe put this in a header file
+luabind::scope getLuaBinding_osgbDynamicsRigidBody();
 
 //Forward declare all the things we need
 //Bullet:
@@ -56,6 +58,7 @@ namespace osgbDynamics{
     class PhysicsData;
     class PhysicsState;
     class PhysicsThread;
+	class RigidBody;
 }
 namespace osgbCollision{
     class CollectVerticesVisitor;
@@ -101,6 +104,7 @@ int luaopen_luabullet(lua_State *L) {
 	    getLuaBinding<osgbDynamics::PhysicsData>(),
 	    getLuaBinding<osgbDynamics::PhysicsState>(),
 	    getLuaBinding<osgbDynamics::PhysicsThread>(),
+		getLuaBinding_osgbDynamicsRigidBody(),
 
 	    scope() // trailing empty scope so we can put commas after each binding call
 	];
