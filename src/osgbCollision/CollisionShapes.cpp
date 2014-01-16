@@ -43,10 +43,6 @@ luabind::scope btSphereCollisionShapeFromOSG()
 static btBoxShape * btBoxCollisionShapeFromOSGDefault(osg::Node * n) {
 	return osgbCollision::btBoxCollisionShapeFromOSG(n);
 }
-/*static btBoxShape * btBoxCollisionShapeFromNothing() {
-	osg::Node * n = new osg::Node(); /// @todo intentional, temporary leak
-	return osgbCollision::btBoxCollisionShapeFromOSG(n);
-}*/
 
 luabind::scope btBoxCollisionShapeFromOSG()
 {
