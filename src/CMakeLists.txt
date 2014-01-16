@@ -58,6 +58,7 @@ set(OSGBULLET_BINDING
 	BulletCollision/BroadphaseCollision/btBroadphaseProxy.cpp
 	BulletCollision/BroadphaseCollision/btDispatcher.cpp
 	BulletCollision/CollisionShapes/btCompoundShape.cpp
+	BulletCollision/CollisionDispatch/btCollisionObject.cpp
 	
 	#osgBullet:
 	osgbDynamics/CreationRecord.cpp

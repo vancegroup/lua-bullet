@@ -51,6 +51,7 @@ class btDefaultCollisionConfiguration;
 class btDispatcher;
 class btBoxShape;
 class btCompoundShape;
+class btCollisionObject;
 //osgBullet:
 namespace osgbDynamics{
     struct CreationRecord;
@@ -83,6 +84,7 @@ int luaopen_luabullet(lua_State *L) {
 	    getLuaBinding<btBoxShape>(),
 	    getLuaBinding<btRigidBody>(),
 		getLuaBinding<btConstraintSolver>(),
+		getLuaBinding<btCollisionShape>(),
 	    getLuaBinding<btDefaultCollisionConfiguration>(),
 		getLuaBinding<btDispatcher>(),
 	    getLuaBinding<btCollisionDispatcher>(),
@@ -93,6 +95,7 @@ int luaopen_luabullet(lua_State *L) {
 	    getLuaBinding<btTransform>(),
 	    getLuaBinding<btBroadphaseProxy>(),
 	    getLuaBinding<btCompoundShape>(),
+		getLuaBinding<btCollisionObject>(),
 
 	    scope() // trailing empty scope so we can put commas after each binding call
 	];
