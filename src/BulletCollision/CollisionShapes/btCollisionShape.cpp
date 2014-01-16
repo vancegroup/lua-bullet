@@ -36,7 +36,6 @@ template<> luabind::scope getLuaBinding<btCollisionShape>() {
 
 	return
 	    class_<btCollisionShape> ("btCollisionShape")
-	    .def(constructor<>())
 	    .def("getAabb", &btCollisionShape::getAabb)
 	    ///@TODO: add btScalar binding for these to work
 	    //.def("getBoundingSphere", &btCollisionShape::getBoundingSphere)

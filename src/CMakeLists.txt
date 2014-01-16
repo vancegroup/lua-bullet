@@ -44,7 +44,7 @@ set(SOURCES
 set(OSGBULLET_BINDING
 	#Bullet:	
 	LinearMath/btVector3.cpp
-	#BulletCollision/CollisionShapes/btCollisionShape.cpp
+	BulletCollision/CollisionShapes/btCollisionShape.cpp
 	BulletCollision/CollisionShapes/btBoxShape.cpp
 	BulletDynamics/Dynamics/btRigidBody.cpp
 	BulletDynamics/ConstraintSolver/btConstraintSolver.cpp
