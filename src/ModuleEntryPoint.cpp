@@ -36,6 +36,7 @@ luabind::scope getLuaBinding_osgbDynamicsRigidBody();
 //Linear Math
 class btVector3;
 class btTransform;
+class btMotionState;
 //BulletDynamics
 class btSequentialImpulseConstraintSolver;
 class btDiscreteDynamicsWorld;
@@ -85,6 +86,7 @@ int luaopen_luabullet(lua_State *L) {
         //bullet
 		// Order matters - bases before derived!
 	    getLuaBinding<btVector3>(),
+		getLuaBinding<btMotionState>(),
 	    getLuaBinding<btRigidBody>(),
 		getLuaBinding<btConstraintSolver>(),
 		getLuaBinding<btCollisionShape>(),
