@@ -10,7 +10,7 @@ AddAppDirectory()
 function makeDie(bw)
 	local root = osg.MatrixTransform()
 	-- load in dice.osg model
-	node = Model "dice.osg"
+	node = Model "../assets/dice.osg"
 	
 	root:addChild(node)
 	
@@ -22,9 +22,9 @@ function makeDie(bw)
 	cr.shapeType = bullet.btBroadphaseProxy.BOX_SHAPE_PROXYTYPE
 	cr.mass = 1.0
 	cr.restitution = 1.0
-	
+	print("About to create rigid body")
 	body = osgbDynamics.createRigidBody(cr, cs)
-	
+	print("Finished creating rigid body")
 	bw:addRigidBody(body)
 	
 	return root
@@ -32,27 +32,18 @@ end
 
 
 function initPhysics()
-	print("initPhysics")
-	 constructionInfo = bullet.btDefaultCollisionConstructionInfo()
-	print("a")
-	 collisionConfiguration = bullet.btDefaultCollisionConfiguration(constructionInfo)
-	print("b")
-	 dispatcher = bullet.btCollisionDispatcher(collisionConfiguration)
-	print("c")
-	 solver = bullet.btSequentialImpulseConstraintSolver()
-	print("d")
+	constructionInfo = bullet.btDefaultCollisionConstructionInfo()
+	collisionConfiguration = bullet.btDefaultCollisionConfiguration(constructionInfo)
+	dispatcher = bullet.btCollisionDispatcher(collisionConfiguration)
+	solver = bullet.btSequentialImpulseConstraintSolver()
 	
-	 worldAabbMin = bullet.btVector3(-10000, -10000, -10000)
-	 worldAabbMax = bullet.btVector3(10000, 10000, 10000)
-	print("e")
+	worldAabbMin = bullet.btVector3(-10000, -10000, -10000)
+	worldAabbMax = bullet.btVector3(10000, 10000, 10000)
 	
-	 inter = bullet.btAxisSweep3(worldAabbMin, worldAabbMax, 1000)
-	print("f")
+	inter = bullet.btAxisSweep3(worldAabbMin, worldAabbMax, 1000)
 	dynamicsWorld = bullet.btDiscreteDynamicsWorld(dispatcher, inter, solver, collisionConfiguration)
-	print("g")
 	dynamicsWorld:setGravity(bullet.btVector3(0, 0, 9.8))
-	
-	print("end init function")
+
 	return dynamicsWorld
 end
 
@@ -66,7 +57,6 @@ function osgBox(center, halfLengths)
 	return geode
 end
 
-print(" here")
 local bulletWorld = initPhysics()
 
 local root = osg.Group()
