@@ -49,6 +49,7 @@ class btBroadphaseInterface;
 class btCollisionDispatcher;
 class btDefaultCollisionConfiguration;
 class btDispatcher;
+class btCollisionShape;
 class btBoxShape;
 class btCompoundShape;
 class btCollisionObject;
