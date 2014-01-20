@@ -42,10 +42,13 @@ set(SOURCES
 )
 
 set(OSGBULLET_BINDING
-	#Bullet:	
+	#Bullet:
 	LinearMath/btVector3.cpp
 	BulletCollision/CollisionShapes/btCollisionShape.cpp
 	BulletCollision/CollisionShapes/btBoxShape.cpp
+	BulletCollision/CollisionShapes/btPolyhedralConvexShape.cpp
+	BulletCollision/CollisionShapes/btConvexInternalShape.cpp
+	BulletCollision/CollisionShapes/btConvexShape.cpp
 	BulletDynamics/Dynamics/btRigidBody.cpp
 	BulletDynamics/ConstraintSolver/btConstraintSolver.cpp
 	BulletCollision/CollisionDispatch/btDefaultCollisionConfiguration.cpp

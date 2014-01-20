@@ -52,6 +52,9 @@ class btDispatcher;
 class btBoxShape;
 class btCompoundShape;
 class btCollisionObject;
+class btPolyhedralConvexShape;
+class btConvexInternalShape;
+class btConvexShape;
 //osgBullet:
 namespace osgbDynamics{
     struct CreationRecord;
@@ -81,10 +84,13 @@ int luaopen_luabullet(lua_State *L) {
         //bullet
 		// Order matters - bases before derived!
 	    getLuaBinding<btVector3>(),
-	    getLuaBinding<btBoxShape>(),
 	    getLuaBinding<btRigidBody>(),
 		getLuaBinding<btConstraintSolver>(),
 		getLuaBinding<btCollisionShape>(),
+		getLuaBinding<btConvexShape>(),
+		getLuaBinding<btConvexInternalShape>(),
+		getLuaBinding<btPolyhedralConvexShape>(),
+		getLuaBinding<btBoxShape>(),
 	    getLuaBinding<btDefaultCollisionConfiguration>(),
 		getLuaBinding<btDispatcher>(),
 	    getLuaBinding<btCollisionDispatcher>(),
