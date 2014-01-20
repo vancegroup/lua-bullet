@@ -56,8 +56,6 @@ template<> luabind::scope getLuaBinding<btDiscreteDynamicsWorld>() {
 	using namespace luabind;
 
 	return
-		class_<btDynamicsWorld> ("btDynamicsWorld")
-		,
 	    class_<btDiscreteDynamicsWorld, btDynamicsWorld> ("btDiscreteDynamicsWorld")
 			.def(constructor<btDispatcher *, btBroadphaseInterface *, btConstraintSolver *, btCollisionConfiguration *>())
 			.def("stepSimulation", &btDiscreteDynamicsWorld::stepSimulation)

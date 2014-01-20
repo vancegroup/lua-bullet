@@ -40,6 +40,7 @@ class btMotionState;
 //BulletDynamics
 class btSequentialImpulseConstraintSolver;
 class btDiscreteDynamicsWorld;
+class btDynamicsWorld;
 class btConstraintSolver;
 class btRigidBody;
 //BulletCollision
@@ -57,6 +58,7 @@ class btCollisionObject;
 class btPolyhedralConvexShape;
 class btConvexInternalShape;
 class btConvexShape;
+class btCollisionWorld;
 //osgBullet:
 namespace osgbDynamics{
     struct CreationRecord;
@@ -100,6 +102,8 @@ int luaopen_luabullet(lua_State *L) {
 		getLuaBinding<btBroadphaseInterface>(),
 	    getLuaBinding<btSequentialImpulseConstraintSolver>(),
 	    getLuaBinding<btAxisSweep3>(),
+		getLuaBinding<btCollisionWorld>(),
+		getLuaBinding<btDynamicsWorld>(),
 	    getLuaBinding<btDiscreteDynamicsWorld>(),
 	    getLuaBinding<btTransform>(),
 	    getLuaBinding<btBroadphaseProxy>(),
