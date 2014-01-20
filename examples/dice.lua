@@ -26,7 +26,7 @@ function makeDie(bw)
 	body = osgbDynamics.createRigidBody(cr, cs)
 	print("Finished creating rigid body")
 	bw:addRigidBody(body)
-	
+	print("Adding rigid body.")
 	return root
 end
 
@@ -74,7 +74,7 @@ local thick = 0.1
 
 local shakeBox = osg.MatrixTransform()
 
-local cs = bullet.btCompoundShape()
+cs = bullet.btCompoundShape()
 
 -- // floor -Z (far back of the shake cube)
 do
