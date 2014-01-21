@@ -42,7 +42,7 @@ template<> luabind::scope getLuaBinding<osgbDynamics::MotionState>() {
 	using namespace luabind;
 
 	return
-	    class_<osgbDynamics::MotionState> ("MotionState")
+	    class_<osgbDynamics::MotionState, btMotionState> ("MotionState")
 	    .def(constructor<osg::Matrix, osg::Vec3>())
 	    .def("setWorldTransform", &osgbDynamics::MotionState::setWorldTransform)
 	    .def("getWorldTransform", &osgbDynamics::MotionState::getWorldTransform)
