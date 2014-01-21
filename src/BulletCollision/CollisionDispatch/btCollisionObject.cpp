@@ -33,5 +33,16 @@ template<> luabind::scope getLuaBinding<btCollisionObject>() {
 
 	return
 		class_<btCollisionObject>("btCollisionObject")
+		//http://www.rasterbar.com/products/luabind/docs.html#enums
+	    //add binding for various enums
+		//see btCollisionObject.h for defines
+	    .enum_("btCollisionObjectDefines")
+	    [
+            value("ACTIVE_TAG", ACTIVE_TAG),
+			value("ISLAND_SLEEPING", ISLAND_SLEEPING),
+			value("WANTS_DEACTIVATION", WANTS_DEACTIVATION),
+			value("DISABLE_DEACTIVATION", DISABLE_DEACTIVATION),
+			value("DISABLE_SIMULATION", DISABLE_SIMULATION)
+		]
 		;
 }
