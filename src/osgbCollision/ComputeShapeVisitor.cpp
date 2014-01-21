@@ -42,7 +42,7 @@ template<> luabind::scope getLuaBinding<osgbCollision::ComputeShapeVisitor>() {
 	using namespace luabind;
 
 	return
-	    class_<osgbCollision::ComputeShapeVisitor> ("ComputeShapeVisitor")
+	    class_<osgbCollision::ComputeShapeVisitor, osg::NodeVisitor> ("ComputeShapeVisitor")
 	    .def(constructor<BroadphaseNativeTypes, osgbCollision::AXIS, unsigned int, osg::NodeVisitor::TraversalMode>())
 	    //http://www.rasterbar.com/products/luabind/docs.html#overloaded-functions
 	    ///@TODO these are close, how to specify osg::Group & ?

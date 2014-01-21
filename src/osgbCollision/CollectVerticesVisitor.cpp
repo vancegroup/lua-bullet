@@ -35,7 +35,7 @@ template<> luabind::scope getLuaBinding<osgbCollision::CollectVerticesVisitor>()
 	using namespace luabind;
 
 	return
-	    class_<osgbCollision::CollectVerticesVisitor> ("CollectVerticesVisitor")
+	    class_<osgbCollision::CollectVerticesVisitor, osg::NodeVisitor> ("CollectVerticesVisitor")
 	    .def(constructor<osg::NodeVisitor::TraversalMode>())
 	    .def("reset", &osgbCollision::CollectVerticesVisitor::reset)
 	    .def("getVertices", &osgbCollision::CollectVerticesVisitor::getVertices)

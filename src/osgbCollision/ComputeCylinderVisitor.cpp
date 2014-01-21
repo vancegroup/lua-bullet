@@ -35,7 +35,7 @@ template<> luabind::scope getLuaBinding<osgbCollision::ComputeCylinderVisitor>()
 	using namespace luabind;
 
 	return
-	    class_<osgbCollision::ComputeCylinderVisitor> ("ComputeCylinderVisitor")
+	    class_<osgbCollision::ComputeCylinderVisitor, osg::NodeVisitor> ("ComputeCylinderVisitor")
 	    .def(constructor<osg::NodeVisitor::TraversalMode>())
 	    .def("reset", &osgbCollision::ComputeCylinderVisitor::reset)
 	    .def("setAxis", &osgbCollision::ComputeCylinderVisitor::setAxis)

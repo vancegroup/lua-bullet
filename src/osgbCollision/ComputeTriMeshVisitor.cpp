@@ -36,7 +36,7 @@ template<> luabind::scope getLuaBinding<osgbCollision::ComputeTriMeshVisitor>() 
 	using namespace luabind;
 
 	return
-	    class_<osgbCollision::ComputeTriMeshVisitor> ("ComputeTriMeshVisitor")
+	    class_<osgbCollision::ComputeTriMeshVisitor, osg::NodeVisitor> ("ComputeTriMeshVisitor")
 	    .def(constructor<osg::NodeVisitor::TraversalMode>())
 	    .def("reset", &osgbCollision::ComputeTriMeshVisitor::reset)
 	    .def("getTriMesh", &osgbCollision::ComputeTriMeshVisitor::getTriMesh)
