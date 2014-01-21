@@ -29,9 +29,6 @@
 // - none
 
 
-namespace {
-
-
 template<> luabind::scope getLuaBinding<btCollisionWorld>() {
 	using namespace luabind;
 
