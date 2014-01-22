@@ -127,10 +127,12 @@ int luaopen_luabullet(lua_State *L) {
     module(L, "osgbCollision")
 	[
         //osgBullet
-        getLuaBinding<osgbCollision::CollectVerticesVisitor>(),
+#if 0 // stuff we need to make introspection wrappers for instead
+		getLuaBinding<osgbCollision::CollectVerticesVisitor>(),
         getLuaBinding<osgbCollision::ComputeCylinderVisitor>(),
 	    getLuaBinding<osgbCollision::ComputeShapeVisitor>(),
 	    getLuaBinding<osgbCollision::ComputeTriMeshVisitor>(),
+#endif
 	    btSphereCollisionShapeFromOSG(),
 	    btBoxCollisionShapeFromOSG(),
 	    btCylinderCollisionShapeFromOSG(),

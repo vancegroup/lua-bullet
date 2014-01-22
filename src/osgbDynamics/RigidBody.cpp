@@ -28,15 +28,28 @@
 
 // Standard includes
 // - none
+#include <iostream>
 
-
-
+static btRigidBody * createRigidBody1Arg(osgbDynamics::CreationRecord* a1) {
+	return osgbDynamics::createRigidBody(a1);
+}
+static btRigidBody * createRigidBody2Arg(osgbDynamics::CreationRecord* a1, btCollisionShape* a2) {
+	btRigidBody * rb = osgbDynamics::createRigidBody(a1, a2);
+	if (!rb) {
+		std::cout << "GOT NULL!" << std::endl;
+	}
+	return rb;
+}
 luabind::scope getLuaBinding_osgbDynamicsRigidBody() {
 	using namespace luabind;
 
 	return
+#if 0
 	    def("createRigidBody", static_cast<btRigidBody* (*)(osgbDynamics::CreationRecord*)>(&osgbDynamics::createRigidBody)),
 		def("createRigidBody", static_cast<btRigidBody* (*)(osgbDynamics::CreationRecord*, btCollisionShape*)>(&osgbDynamics::createRigidBody)),
+#endif
+		def("createRigidBody", &createRigidBody1Arg),
+		def("createRigidBody", &createRigidBody2Arg),
 		scope()
 	    ;
 }

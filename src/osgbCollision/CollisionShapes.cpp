@@ -18,6 +18,7 @@
 
 // Internal Includes
 #include "CollisionShapes.h"
+#include "../OverrideosgLuabind.h"
 
 // Library/third-party includes
 #include <luabind/class.hpp>
@@ -25,8 +26,6 @@
 #include <osgbCollision/CollisionShapes.h>
 
 #include <osg/Node>
-#include <osgLua/Config>
-#include <osgLua/osgLuabind>
 
 // Standard includes
 // - none
