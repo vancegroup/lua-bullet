@@ -58,6 +58,7 @@ template<> luabind::scope getLuaBinding<btCompoundShape>() {
 
 	return
 	    class_<btCompoundShape, btCollisionShape> ("btCompoundShape")
+		.def(constructor<>())
 	    .def(constructor<bool>())
 	    .def("addChildShape", &btCompoundShape::addChildShape)
 	    .def("removeChildShape", &btCompoundShape::removeChildShape)
