@@ -46,6 +46,18 @@ static btRigidBody * createRigidBodyNicely(luabind::argument t) {
 	if (t["margin"]) {
 		c->setMargin(object_cast<float>(t["margin"]));
 	}
+	if (t["mass"]) {
+		c->_mass = object_cast<float>(t["mass"]);
+	}
+	if (t["restitution"]) {
+		c->_restitution = object_cast<float>(t["restitution"]);
+	}
+	if (t["friction"]) {
+		c->_friction = object_cast<float>(t["friction"]);
+	}
+	if (t["shapeType"]) {
+		c->_shapeType = object_cast<BroadphaseNativeTypes>(t["shapeType"]);
+	}
 	/// @todo I think there are a few more fields here that might be useful.
 
 	// Choose the unary or binary createRigidBody overload.
