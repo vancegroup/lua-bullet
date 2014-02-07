@@ -55,7 +55,7 @@ function osgBox(center, halfLengths)
 	return geode
 end
 
-local bulletWorld = initPhysics()
+bulletWorld = initPhysics()
 
 local root = osg.Group()
 
@@ -150,18 +150,30 @@ end
 -- /* END: Create environment boxes */
 
 shakeMotion = osgbDynamics.MotionState()
-shakeMotion:setTransform( shakebox ) --fix this, ownership of OSG?
+shakeMotion:setTransform( shakebox )
 local mass = 0.0 --in C++, this was of type btScalar
 local inertia = bullet.btVector3(0.0, 0.0, 0.0)
 
 rb = bullet.btRigidBody.btRigidBodyConstructionInfo( mass, shakeMotion, cs, inertia )
 shakeBody = bullet.btRigidBody(rb)
+
+-- Original C++
 -- shakeBody->setCollisionFlags( shakeBody->getCollisionFlags() | btCollisionObject::CF_KINEMATIC_OBJECT );
-shakeBody:setCollisionFlags( shakeBody:getCollisionFlags() + btCollisionObject.CF_KINEMATIC_OBJECT )
-shakeBody:setActivationState( DISABLE_DEACTIVATION )
+shakeBody:setCollisionFlags( shakeBody:getCollisionFlags() + bullet.btCollisionObject.CF_KINEMATIC_OBJECT )
+shakeBody:setActivationState( bullet.btCollisionObject.DISABLE_DEACTIVATION )
 bulletWorld:addRigidBody( shakeBody )
 
-root:addChild( shakeBox )
+root:addChild( shakebox )
+
+print("Done")
+
+Actions.addFrameAction(function()
+	while true do
+		dt = Actions.waitForRedraw()
+		print(dt)
+		bulletWorld:stepSimulation(dt,4,dt/4)
+	end
+end)
 
     -- double prevSimTime = 0.;
     -- while( !viewer.done() )
