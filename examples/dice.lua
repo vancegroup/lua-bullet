@@ -17,16 +17,14 @@ function makeDie(bw)
 	cs = osgbCollision.btBoxCollisionShapeFromOSG(node)
 	
 	cr = osgbDynamics.CreationRecord()
-	
-	cr.sceneGraph = root
-	cr.shapeType = bullet.btBroadphaseProxy.BOX_SHAPE_PROXYTYPE
-	cr.mass = 1.0
-	cr.restitution = 1.0
-	print("About to create rigid body")
-	body = osgbDynamics.createRigidBody(cr, cs)
-	print("Finished creating rigid body")
+
+	body = osgbDynamics.createRigidBody{
+		sceneGraph = root,
+		shapeType = bullet.btBroadphaseProxy.BOX_SHAPE_PROXYTYPE,
+		mass = 1.0,
+		restitution = 1.0
+	}
 	bw:addRigidBody(body)
-	print("Adding rigid body.")
 	return root
 end
 
@@ -49,8 +47,8 @@ end
 
 
 function osgBox(center, halfLengths)
-	local l = osg.Vec3(halfLengths * 2.0)
-	box = osg.Box(center, l.x(), l.y(), l.z())
+	local l = osg.Vec3f(halfLengths:x() * 2.0, halfLengths:y() * 2.0, halfLengths:z() * 2.0)
+	box = osg.Box(osg.Vec3f(center:x(),center:y(),center:z()), l:x(), l:y(), l:z())
 	shape = osg.ShapeDrawable(box)
 	geode = osg.Geode()
 	geode:addDrawable(shape)
@@ -72,33 +70,34 @@ local yDim = 10.0
 local zDim = 10.0
 local thick = 0.1
 
-local shakeBox = osg.MatrixTransform()
+local shakebox = osg.MatrixTransform()
 
 cs = bullet.btCompoundShape()
 
+
 -- // floor -Z (far back of the shake cube)
 do
-	halfLengths = osg.Vec3(xDim*.5, yDim*.5, thick*.5)
-	center = osg.Vec3(0, 0,  zDim*.5)
+	halfLengths = Vec(xDim*.5, yDim*.5, thick*.5)
+	center = Vec(0, 0,  zDim*.5)
 	tbox = osgBox( center, halfLengths )
 	shakebox:addChild(tbox)
-	box = bullet.btBoxShape(osgbCollision.asBtVector2(halfLengths))
+	box = bullet.btBoxShape(bullet.btVector3(halfLengths:x(), halfLengths:y(), halfLengths:z()))
 	trans = bullet.btTransform()
 	trans:setIdentity()
-	trans:setOrigin(osgbCollision.asBtVector2(center))
-	cs:addChildShape(trans,box)
+	trans:setOrigin(bullet.btVector3(center:x(), center:y(), center:z()))
+	cs:addChildShape(trans, box)
 end
 -- // top +Z (invisible, to allow user to see through; no OSG analogue
 do
 	halfLengths = osg.Vec3(xDim*.5, yDim*.5, thick*.5)
 	center = osg.Vec3(0, 0,  -zDim*.5)
 	tbox = osgBox( center, halfLengths )
-	-- shakebox:addChild(tbox)
-	box = bullet.btBoxShape(osgbCollision.asBtVector2(halfLengths))
+	-- shakebox:addChild(tbox) --no top to box
+	box = bullet.btBoxShape(bullet.btVector3(halfLengths:x(), halfLengths:y(), halfLengths:z()))
 	trans = bullet.btTransform()
 	trans:setIdentity()
-	trans:setOrigin(osgbCollision.asBtVector2(center))
-	cs:addChildShape(trans,box)
+	trans:setOrigin(bullet.btVector3(center:x(), center:y(), center:z()))
+	cs:addChildShape(trans, box)
 end
 -- // left -X  
 do
@@ -106,11 +105,11 @@ do
 	center = osg.Vec3(-xDim*.5, 0.0, 0.0 )
 	tbox = osgBox( center, halfLengths )
 	shakebox:addChild(tbox)
-	box = bullet.btBoxShape(osgbCollision.asBtVector2(halfLengths))
+	box = bullet.btBoxShape(bullet.btVector3(halfLengths:x(), halfLengths:y(), halfLengths:z()))
 	trans = bullet.btTransform()
 	trans:setIdentity()
-	trans:setOrigin(osgbCollision.asBtVector2(center))
-	cs:addChildShape(trans,box)
+	trans:setOrigin(bullet.btVector3(center:x(), center:y(), center:z()))
+	cs:addChildShape(trans, box)
 end
 -- // right +X
 do
@@ -118,11 +117,11 @@ do
 	center = osg.Vec3(xDim*.5, 0.0, 0.0 )
 	tbox = osgBox( center, halfLengths )
 	shakebox:addChild(tbox)
-	box = bullet.btBoxShape(osgbCollision.asBtVector2(halfLengths))
+	box = bullet.btBoxShape(bullet.btVector3(halfLengths:x(), halfLengths:y(), halfLengths:z()))
 	trans = bullet.btTransform()
 	trans:setIdentity()
-	trans:setOrigin(osgbCollision.asBtVector2(center))
-	cs:addChildShape(trans,box)
+	trans:setOrigin(bullet.btVector3(center:x(), center:y(), center:z()))
+	cs:addChildShape(trans, box)
 end
 -- // bottom of window -Y
 do
@@ -130,11 +129,11 @@ do
 	center = osg.Vec3( 0.0, -yDim*.5, 0.0 )
 	tbox = osgBox( center, halfLengths )
 	shakebox:addChild(tbox)
-	box = bullet.btBoxShape(osgbCollision.asBtVector2(halfLengths))
+	box = bullet.btBoxShape(bullet.btVector3(halfLengths:x(), halfLengths:y(), halfLengths:z()))
 	trans = bullet.btTransform()
 	trans:setIdentity()
-	trans:setOrigin(osgbCollision.asBtVector2(center))
-	cs:addChildShape(trans,box)
+	trans:setOrigin(bullet.btVector3(center:x(), center:y(), center:z()))
+	cs:addChildShape(trans, box)
 end
 -- // bottom of window -Y
 do
@@ -142,19 +141,20 @@ do
 	center = osg.Vec3( 0.0, yDim*.5, 0.0 )
 	tbox = osgBox( center, halfLengths )
 	shakebox:addChild(tbox)
-	box = bullet.btBoxShape(osgbCollision.asBtVector2(halfLengths))
+	box = bullet.btBoxShape(bullet.btVector3(halfLengths:x(), halfLengths:y(), halfLengths:z()))
 	trans = bullet.btTransform()
 	trans:setIdentity()
-	trans:setOrigin(osgbCollision.asBtVector2(center))
-	cs:addChildShape(trans,box)
+	trans:setOrigin(bullet.btVector3(center:x(), center:y(), center:z()))
+	cs:addChildShape(trans, box)
 end
 -- /* END: Create environment boxes */
+
 shakeMotion = osgbDynamics.MotionState()
-shakeMotion:setTransform( shakeBox )
-local mass = bullet.btScalar(0.0)
-local inertia = bullet.btVector3(0.0,0.0,0.0)
---bullet.?
-rb = btRigidBody.btRigidBodyConstructionInfo( mass, shakeMotion, cs, inertia )
+shakeMotion:setTransform( shakebox ) --fix this, ownership of OSG?
+local mass = 0.0 --in C++, this was of type btScalar
+local inertia = bullet.btVector3(0.0, 0.0, 0.0)
+
+rb = bullet.btRigidBody.btRigidBodyConstructionInfo( mass, shakeMotion, cs, inertia )
 shakeBody = bullet.btRigidBody(rb)
 -- shakeBody->setCollisionFlags( shakeBody->getCollisionFlags() | btCollisionObject::CF_KINEMATIC_OBJECT );
 shakeBody:setCollisionFlags( shakeBody:getCollisionFlags() + btCollisionObject.CF_KINEMATIC_OBJECT )
