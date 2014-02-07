@@ -21,7 +21,9 @@
 #include "../BindingFwd.h"
 
 // Library/third-party includes
-#include <luabind/class.hpp>
+#include <luabind/luabind.hpp>
+#include <osg/Node>
+#include <osgLua/osgLuabind>
 
 #include <osgbDynamics/RigidBody.h>
 
@@ -30,26 +32,40 @@
 // - none
 #include <iostream>
 
-static btRigidBody * createRigidBody1Arg(osgbDynamics::CreationRecord* a1) {
-	return osgbDynamics::createRigidBody(a1);
+static btRigidBody * createRigidBodyNicely(luabind::argument t) {
+	if (luabind::type(t) != LUA_TTABLE) {
+		throw std::runtime_error("Must pass a table of arguments to createRigidBody!");
+	}
+	osg::ref_ptr<osgbDynamics::CreationRecord> c(new osgbDynamics::CreationRecord);
+	using luabind::object_cast;
+
+	c->_sceneGraph = object_cast<osg::Node *>(t["sceneGraph"]);
+	if (t["com"]) {
+		c->setCenterOfMass(object_cast<osg::Vec3>(t["com"]));
+	}
+	if (t["margin"]) {
+		c->setMargin(object_cast<float>(t["margin"]));
+	}
+	/// @todo I think there are a few more fields here that might be useful.
+
+	// Choose the unary or binary createRigidBody overload.
+	if (t["collisionShape"]) {
+		return osgbDynamics::createRigidBody(c.get(), luabind::object_cast<btCollisionShape*>(t["collisionShape"]));
+	}
+	return osgbDynamics::createRigidBody(c.get());
+
 }
-static btRigidBody * createRigidBody2Arg(osgbDynamics::CreationRecord* a1, btCollisionShape* a2) {
-	btRigidBody * rb = osgbDynamics::createRigidBody(a1, a2);
+
+static btRigidBody * createRigidBodyProtected(luabind::argument t) {
+	btRigidBody * rb = createRigidBodyNicely(t);
 	if (!rb) {
 		std::cout << "GOT NULL!" << std::endl;
 	}
 	return rb;
 }
+
 luabind::scope getLuaBinding_osgbDynamicsRigidBody() {
 	using namespace luabind;
 
-	return
-#if 0
-	    def("createRigidBody", static_cast<btRigidBody* (*)(osgbDynamics::CreationRecord*)>(&osgbDynamics::createRigidBody)),
-		def("createRigidBody", static_cast<btRigidBody* (*)(osgbDynamics::CreationRecord*, btCollisionShape*)>(&osgbDynamics::createRigidBody)),
-#endif
-		def("createRigidBody", &createRigidBody1Arg),
-		def("createRigidBody", &createRigidBody2Arg),
-		scope()
-	    ;
+	return def("createRigidBody", &createRigidBodyProtected);
 }
