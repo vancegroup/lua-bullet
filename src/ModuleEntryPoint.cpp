@@ -89,6 +89,7 @@ int luaopen_luabullet(lua_State *L) {
 		// Order matters - bases before derived!
 	    getLuaBinding<btVector3>(),
 		getLuaBinding<btMotionState>(),
+		getLuaBinding<btCollisionObject>(),
 	    getLuaBinding<btRigidBody>(),
 		getLuaBinding<btConstraintSolver>(),
 		getLuaBinding<btCollisionShape>(),
@@ -108,7 +109,6 @@ int luaopen_luabullet(lua_State *L) {
 	    getLuaBinding<btTransform>(),
 	    getLuaBinding<btBroadphaseProxy>(),
 	    getLuaBinding<btCompoundShape>(),
-		getLuaBinding<btCollisionObject>(),
 
 	    scope() // trailing empty scope so we can put commas after each binding call
 	];

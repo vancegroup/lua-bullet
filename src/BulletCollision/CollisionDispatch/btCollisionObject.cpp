@@ -28,6 +28,7 @@
 // Standard includes
 // - none
 
+
 template<> luabind::scope getLuaBinding<btCollisionObject>() {
 	using namespace luabind;
 
@@ -54,5 +55,25 @@ template<> luabind::scope getLuaBinding<btCollisionObject>() {
 			value("CF_DISABLE_VISUALIZE_OBJECT", btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT),
 			value("CF_DISABLE_SPU_COLLISION_PROCESSING", btCollisionObject::CF_DISABLE_SPU_COLLISION_PROCESSING)
 		]
+		.enum_("CollisionObjectTypes")
+		[
+			value("CO_COLLISION_OBJECT", btCollisionObject::CO_COLLISION_OBJECT),
+			value("CO_RIGID_BODY", btCollisionObject::CO_RIGID_BODY),
+			value("CO_GHOST_OBJECT", btCollisionObject::CO_GHOST_OBJECT),
+			value("CO_SOFT_BODY", btCollisionObject::CO_SOFT_BODY),
+			value("CO_HF_FLUID", btCollisionObject::CO_HF_FLUID),
+			value("CO_USER_TYPE", btCollisionObject::CO_USER_TYPE),
+			value("CO_FEATHERSTONE_LINK", btCollisionObject::CO_FEATHERSTONE_LINK)
+		]
+		.enum_("AnisotropicFrictionFlags")
+		[
+			value("CF_ANISOTROPIC_FRICTION_DISABLED", btCollisionObject::CF_ANISOTROPIC_FRICTION_DISABLED),
+			value("CF_ANISOTROPIC_FRICTION", btCollisionObject::CF_ANISOTROPIC_FRICTION),
+			value("CF_ANISOTROPIC_ROLLING_FRICTION", btCollisionObject::CF_ANISOTROPIC_ROLLING_FRICTION)
+		]
+		.def("getCollisionFlags", &btCollisionObject::getCollisionFlags)
+		.def("setCollisionFlags", &btCollisionObject::setCollisionFlags)
+		.def("setActivationState", &btCollisionObject::setActivationState)
+		.def("getActivationState", &btCollisionObject::getActivationState)
 		;
 }

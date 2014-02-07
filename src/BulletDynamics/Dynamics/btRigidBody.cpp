@@ -58,7 +58,7 @@ template<> luabind::scope getLuaBinding<btRigidBody>() {
 	using namespace luabind;
 
 	return
-	    class_<btRigidBody> ("btRigidBody")
+	    class_<btRigidBody, btCollisionObject> ("btRigidBody")
 	    .def(constructor<btRigidBody::btRigidBodyConstructionInfo>())
 	    .def(constructor<btScalar, btMotionState *, btCollisionShape *, btVector3>())
 	    .scope

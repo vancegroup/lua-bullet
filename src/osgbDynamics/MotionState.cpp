@@ -23,6 +23,9 @@
 // Library/third-party includes
 #include <luabind/class.hpp>
 
+#include <osg/Transform>
+#include <osgLua/osgLuabind>
+
 #include <osgbDynamics/MotionState.h>
 #include <osgbDynamics/TripleBuffer.h>
 
