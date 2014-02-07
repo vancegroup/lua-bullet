@@ -44,6 +44,7 @@ template<> luabind::scope getLuaBinding<osgbDynamics::MotionState>() {
 	return
 	    class_<osgbDynamics::MotionState, btMotionState> ("MotionState")
 	    .def(constructor<osg::Matrix, osg::Vec3>())
+		.def(constructor<>())
 	    .def("setWorldTransform", &osgbDynamics::MotionState::setWorldTransform)
 	    .def("getWorldTransform", &osgbDynamics::MotionState::getWorldTransform)
 	    .def("computeCOLocalToOsgLocal", &osgbDynamics::MotionState::computeCOLocalToOsgLocal)

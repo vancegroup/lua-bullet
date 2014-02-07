@@ -54,6 +54,7 @@ template<> luabind::scope getLuaBinding<btTransform>() {
 	    .def(constructor<btQuaternion, btVector3>())
 	    .def(constructor<btMatrix3x3, btVector3>())
 	    .def(constructor<btTransform>())
+		.def(constructor<>())
 	    .def("mult", &btTransform::mult)
 	    .def("getBasis", &getBasisConst)
 	    .def("getBasis", &getBasisNonConst)
