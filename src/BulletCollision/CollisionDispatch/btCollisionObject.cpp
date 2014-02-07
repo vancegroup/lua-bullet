@@ -44,5 +44,15 @@ template<> luabind::scope getLuaBinding<btCollisionObject>() {
 			value("DISABLE_DEACTIVATION", DISABLE_DEACTIVATION),
 			value("DISABLE_SIMULATION", DISABLE_SIMULATION)
 		]
+		.enum_("CollisionFlags")
+		[
+			value("CF_STATIC_OBJECT", btCollisionObject::CF_STATIC_OBJECT),
+			value("CF_KINEMATIC_OBJECT", btCollisionObject::CF_KINEMATIC_OBJECT),
+			value("CF_NO_CONTACT_RESPONSE", btCollisionObject::CF_NO_CONTACT_RESPONSE),
+			value("CF_CUSTOM_MATERIAL_CALLBACK", btCollisionObject::CF_CUSTOM_MATERIAL_CALLBACK),
+			value("CF_CHARACTER_OBJECT", btCollisionObject::CF_CHARACTER_OBJECT),
+			value("CF_DISABLE_VISUALIZE_OBJECT", btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT),
+			value("CF_DISABLE_SPU_COLLISION_PROCESSING", btCollisionObject::CF_DISABLE_SPU_COLLISION_PROCESSING)
+		]
 		;
 }
