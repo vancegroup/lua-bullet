@@ -14,11 +14,12 @@ function makeDie(bw)
 	
 	root:addChild(node)
 	
-	cs = osgbCollision.btBoxCollisionShapeFromOSG(node)
+	local cs = osgbCollision.btBoxCollisionShapeFromOSG(node)
 	
-	cr = osgbDynamics.CreationRecord()
 
+	-- this differs slightly from the C++ (see RigidBody.cpp for details on what can be passed in)
 	body = osgbDynamics.createRigidBody{
+		collisionShape = cs,
 		sceneGraph = root,
 		shapeType = bullet.btBroadphaseProxy.BOX_SHAPE_PROXYTYPE,
 		mass = 1.0,
