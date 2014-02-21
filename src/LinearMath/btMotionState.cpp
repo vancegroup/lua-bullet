@@ -33,5 +33,6 @@ template<> luabind::scope getLuaBinding<btMotionState>() {
 
 	return
 		class_<btMotionState>("btMotionState")
+		.property("worldTransform", &btMotionState::getWorldTransform, &btMotionState::setWorldTransform)
 		;
 }
