@@ -51,6 +51,9 @@ namespace {
         return b->getConstraint(index);
     }
 }
+static int stepSimulationSimple(btDiscreteDynamicsWorld & self, btScalar timeStep) {
+	return self.stepSimulation(timeStep);
+}
 
 template<> luabind::scope getLuaBinding<btDiscreteDynamicsWorld>() {
 	using namespace luabind;
@@ -59,6 +62,7 @@ template<> luabind::scope getLuaBinding<btDiscreteDynamicsWorld>() {
 	    class_<btDiscreteDynamicsWorld, btDynamicsWorld> ("btDiscreteDynamicsWorld")
 			.def(constructor<btDispatcher *, btBroadphaseInterface *, btConstraintSolver *, btCollisionConfiguration *>())
 			.def("stepSimulation", &btDiscreteDynamicsWorld::stepSimulation)
+			.def("stepSimulation", &stepSimulationSimple)
 			.def("synchronizeMotionStates", &btDiscreteDynamicsWorld::synchronizeMotionStates)
 			.def("synchronizeSingleMotionState", &btDiscreteDynamicsWorld::synchronizeSingleMotionState)
 			.def("addConstraint", &btDiscreteDynamicsWorld::addConstraint)
