@@ -1,32 +1,64 @@
 -- lua-bullet Dice example, ported from osgBullet example (dice.cpp)
 require("luabullet")
 require("osgDB")
--- require("osgbCollision")
--- require("osgbDynamics")
 
 require "AddAppDirectory"
 AddAppDirectory()
 
-function makeDie(bw)
-	local root = osg.MatrixTransform()
+function makeDie(bw, pos)
 	-- load in dice.osg model
-	node = Model "../assets/dice.osg"
-	
-	root:addChild(node)
-	
+	local node = Model("../assets/dice.osg")
+	local root = MatrixTransform{
+		Transform{
+			position = pos,
+			node
+		}
+	}
+
 	local cs = osgbCollision.btBoxCollisionShapeFromOSG(node)
-	
 
 	-- this differs slightly from the C++ (see RigidBody.cpp for details on what can be passed in)
-	body = osgbDynamics.createRigidBody{
+	local body = osgbDynamics.createRigidBody{
 		collisionShape = cs,
 		sceneGraph = root,
 		shapeType = bullet.btBroadphaseProxy.BOX_SHAPE_PROXYTYPE,
 		mass = 1.0,
 		restitution = 1.0
 	}
+
 	bw:addRigidBody(body)
 	return root
+end
+
+function bit(p)
+  return 2 ^ (p - 1)  -- 1-based indexing
+end
+
+function hasbit(x, p)
+  return x % (p + p) >= p
+end
+
+function setbit(x, p)
+  return hasbit(x, p) and x or x + p
+end
+
+function clearbit(x, p)
+  return hasbit(x, p) and x - p or x
+end
+
+-- bitwise inclusive OR
+-- http://ricilake.blogspot.com/2007/10/iterating-bits-in-lua.html
+-- online calculator
+-- http://www.miniwebtool.com/bitwise-calculator/
+function bitor(x, y)
+  local p = 1; local z = 0; local limit = x > y and x or y
+  while p <= limit do
+    if hasbit(x, p) or hasbit(y, p) then
+      z = z + p
+    end
+    p = p + p
+  end
+  return z
 end
 
 
@@ -41,7 +73,7 @@ function initPhysics()
 	
 	inter = bullet.btAxisSweep3(worldAabbMin, worldAabbMax, 1000)
 	dynamicsWorld = bullet.btDiscreteDynamicsWorld(dispatcher, inter, solver, collisionConfiguration)
-	dynamicsWorld:setGravity(bullet.btVector3(0, 0, 9.8))
+	dynamicsWorld:setGravity(bullet.btVector3(0, -9.8, 0))
 
 	return dynamicsWorld
 end
@@ -56,15 +88,18 @@ function osgBox(center, halfLengths)
 	return geode
 end
 
+
 bulletWorld = initPhysics()
 
-local root = osg.Group()
+die1 = makeDie(bulletWorld, {0, 2, -3})
+die2 = makeDie(bulletWorld, {0, 0, -3})
 
-die1 = makeDie(bulletWorld)
-die2 = makeDie(bulletWorld)
+local root = Group{
+	die1,
+	die2
+}
 
-root:addChild(die1)
-root:addChild(die1)
+
 
 local xDim = 10.0
 local yDim = 10.0
@@ -160,31 +195,21 @@ shakeBody = bullet.btRigidBody(rb)
 
 -- Original C++
 -- shakeBody->setCollisionFlags( shakeBody->getCollisionFlags() | btCollisionObject::CF_KINEMATIC_OBJECT );
-shakeBody:setCollisionFlags( shakeBody:getCollisionFlags() + bullet.btCollisionObject.CF_KINEMATIC_OBJECT )
+print (bitor(shakeBody:getCollisionFlags(), bullet.btCollisionObject.CF_KINEMATIC_OBJECT))
+shakeBody:setCollisionFlags( bitor(shakeBody:getCollisionFlags(), bullet.btCollisionObject.CF_KINEMATIC_OBJECT) )
 shakeBody:setActivationState( bullet.btCollisionObject.DISABLE_DEACTIVATION )
 bulletWorld:addRigidBody( shakeBody )
 
-root:addChild( shakebox )
+--root:addChild( shakebox )
 
-print("Done")
+RelativeTo.World:addChild(root)
+
 
 Actions.addFrameAction(function()
 	while true do
-		dt = Actions.waitForRedraw()
-		print(dt)
-		bulletWorld:stepSimulation(dt,4,dt/4)
+		elapsed = Actions.waitForRedraw()
+		--http://stackoverflow.com/questions/12778229/stepsimulation-bullet-physics
+		--http://bulletphysics.org/mediawiki-1.5.8/index.php/Stepping_The_World
+		bulletWorld:stepSimulation(elapsed)
 	end
 end)
-
-    -- double prevSimTime = 0.;
-    -- while( !viewer.done() )
-    -- {
-        -- const double currSimTime = viewer.getFrameStamp()->getSimulationTime();
-        -- double elapsed( currSimTime - prevSimTime );
-        -- if( viewer.getFrameStamp()->getFrameNumber() < 3 )
-            -- elapsed = 1./60.;
-        -- //osg::notify( osg::ALWAYS ) << elapsed / 3. << ", " << 1./180. << std::endl;
-        -- bulletWorld->stepSimulation( elapsed, 4, elapsed/4. );
-        -- prevSimTime = currSimTime;
-        -- viewer.frame();
-    -- }
