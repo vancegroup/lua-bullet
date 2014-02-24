@@ -49,6 +49,8 @@ set(OSGBULLET_BINDING
 	BulletCollision/CollisionShapes/btPolyhedralConvexShape.cpp
 	BulletCollision/CollisionShapes/btConvexInternalShape.cpp
 	BulletCollision/CollisionShapes/btConvexShape.cpp
+	BulletCollision/CollisionShapes/btStaticPlaneShape.cpp
+	BulletCollision/CollisionShapes/btSphereShape.cpp
 	BulletDynamics/Dynamics/btRigidBody.cpp
 	BulletDynamics/ConstraintSolver/btConstraintSolver.cpp
 	BulletCollision/CollisionDispatch/btDefaultCollisionConfiguration.cpp

@@ -53,6 +53,8 @@ class btDefaultCollisionConfiguration;
 class btDispatcher;
 class btCollisionShape;
 class btBoxShape;
+class btStaticPlaneShape;
+class btSphereShape;
 class btCompoundShape;
 class btCollisionObject;
 class btPolyhedralConvexShape;
@@ -97,6 +99,8 @@ int luaopen_luabullet(lua_State *L) {
 		getLuaBinding<btConvexInternalShape>(),
 		getLuaBinding<btPolyhedralConvexShape>(),
 		getLuaBinding<btBoxShape>(),
+		getLuaBinding<btStaticPlaneShape>(),
+		getLuaBinding<btSphereShape>(),
 	    getLuaBinding<btDefaultCollisionConfiguration>(),
 		getLuaBinding<btDispatcher>(),
 	    getLuaBinding<btCollisionDispatcher>(),
