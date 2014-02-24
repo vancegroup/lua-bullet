@@ -35,7 +35,7 @@ template<> luabind::scope getLuaBinding<btSphereShape>() {
 
 	return
 		class_<btSphereShape, btConvexInternalShape> ("btSphereShape")
-		.def(constructor<btSphereShape>())
+		.def(constructor<btScalar>())
 		.def("localGetSupportingVertex", &btSphereShape::localGetSupportingVertex)
 		.def("localGetSupportingVertexWithoutMargin", &btSphereShape::localGetSupportingVertexWithoutMargin)
 		.def("batchedUnitVectorGetSupportingVertexWithoutMargin", &btSphereShape::batchedUnitVectorGetSupportingVertexWithoutMargin)

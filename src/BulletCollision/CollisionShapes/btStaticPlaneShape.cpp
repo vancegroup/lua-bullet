@@ -35,7 +35,7 @@ template<> luabind::scope getLuaBinding<btStaticPlaneShape>() {
 
 	return
 		class_<btStaticPlaneShape, btConcaveShape> ("btStaticPlaneShape")
-		.def(constructor<btStaticPlaneShape>())
+		.def(constructor<const btVector3&, btScalar>())
 		.def("getAabb", &btStaticPlaneShape::getAabb)
 		.def("processAllTriangles", &btStaticPlaneShape::processAllTriangles)
 		.def("calculateLocalInertia", &btStaticPlaneShape::calculateLocalInertia)
