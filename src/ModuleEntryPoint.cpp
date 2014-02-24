@@ -60,6 +60,7 @@ class btCollisionObject;
 class btPolyhedralConvexShape;
 class btConvexInternalShape;
 class btConvexShape;
+class btConcaveShape;
 class btCollisionWorld;
 //osgBullet:
 namespace osgbDynamics{
@@ -95,6 +96,7 @@ int luaopen_luabullet(lua_State *L) {
 		getLuaBinding<btConstraintSolver>(),
 		getLuaBinding<btCollisionShape>(),
 		getLuaBinding<btConvexShape>(),
+		getLuaBinding<btConcaveShape>(),
 		getLuaBinding<btConvexInternalShape>(),
 		getLuaBinding<btPolyhedralConvexShape>(),
 		getLuaBinding<btBoxShape>(),
