@@ -4,10 +4,11 @@ require("osgDB")
 
 require "AddAppDirectory"
 AddAppDirectory()
+runfile[[simpleLights.lua]]
 
 function makeDie(bw, pos)
 	-- load in dice.osg model
-	local node = Model("../assets/dice.osg")
+	local node = Model("../assets/dice.ive")
 	local root = MatrixTransform{
 		Transform{
 			position = pos,
