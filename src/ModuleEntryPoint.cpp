@@ -63,7 +63,6 @@ class btConvexShape;
 class btCollisionWorld;
 //osgBullet:
 namespace osgbDynamics{
-    struct CreationRecord;
     class MotionState;
     class PhysicsData;
     class PhysicsState;
@@ -119,7 +118,6 @@ int luaopen_luabullet(lua_State *L) {
 	module(L, "osgbDynamics")
 	[
         //osgBullet
-	    getLuaBinding<osgbDynamics::CreationRecord>(),
 	    getLuaBinding<osgbDynamics::MotionState>(),
 	    getLuaBinding<osgbDynamics::PhysicsData>(),
 	    getLuaBinding<osgbDynamics::PhysicsState>(),

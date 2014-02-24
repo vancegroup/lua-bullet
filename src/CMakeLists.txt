@@ -69,7 +69,6 @@ set(OSGBULLET_BINDING
 	BulletCollision/CollisionDispatch/btCollisionObject.cpp
 	
 	#osgBullet:
-	osgbDynamics/CreationRecord.cpp
 	osgbDynamics/MotionState.cpp
 	osgbDynamics/PhysicsThread.cpp
 	osgbDynamics/PhysicsState.cpp
