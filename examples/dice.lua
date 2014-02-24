@@ -1,7 +1,6 @@
 -- lua-bullet Dice example, ported from osgBullet example (dice.cpp)
 require("luabullet")
 require("osgDB")
-
 require "AddAppDirectory"
 AddAppDirectory()
 runfile[[simpleLights.lua]]
@@ -81,7 +80,7 @@ end
 
 
 function osgBox(center, halfLengths)
-	local l = osg.Vec3f(halfLengths:x() * 2.0, halfLengths:y() * 2.0, halfLengths:z() * 2.0)
+	local l = osg.Vec3f(halfLengths:x()*2, halfLengths:y()*2, halfLengths:z()*2)
 	box = osg.Box(osg.Vec3f(center:x(),center:y(),center:z()), l:x(), l:y(), l:z())
 	shape = osg.ShapeDrawable(box)
 	geode = osg.Geode()
@@ -89,11 +88,25 @@ function osgBox(center, halfLengths)
 	return geode
 end
 
+function osgBoxByLeif(center, halfLengths)
+	local l = osg.Vec3d(halfLengths:x()*2, halfLengths:y()*2, halfLengths:z()*2)
+	box = osg.Box(osg.Vec3f(center:x(),center:y(),center:z()), l:x(), l:y(), l:z())
+	shape = osg.ShapeDrawable(box)
+	geode = osg.Geode()
+	geode:addDrawable(shape)
+	local t = Transform{
+		geode,
+	}
+	t:setScale(l)
+	return t
+end
+
+
 
 bulletWorld = initPhysics()
 
-die1 = makeDie(bulletWorld, {0, 2, -3})
-die2 = makeDie(bulletWorld, {0, 0, -3})
+die1 = makeDie(bulletWorld, {1.75, 5, 0})
+die2 = makeDie(bulletWorld, {0, 2, 0})
 
 local root = Group{
 	die1,
@@ -102,28 +115,44 @@ local root = Group{
 
 
 
-local xDim = 10.0
-local yDim = 10.0
-local zDim = 10.0
+local xDim = 2.0
+local yDim = 2.0
+local zDim = 2.0
 local thick = 0.1
 
 local shakebox = osg.MatrixTransform()
 
-cs = bullet.btCompoundShape()
-
-
--- // floor -Z (far back of the shake cube)
+-- cs = bullet.btCompoundShape()
+cs = bullet.btStaticPlaneShape(bullet.btVector3(0, 1, 0),0)
+halfLengths = Vec(2, .025, 2)
+center = Vec(0, .025, 0)
+thefloor = osgBoxByLeif(center,halfLengths)
+shakebox:addChild(thefloor)
+-- // floor -Y 
+--[[
 do
-	halfLengths = Vec(xDim*.5, yDim*.5, thick*.5)
-	center = Vec(0, 0,  zDim*.5)
-	tbox = osgBox( center, halfLengths )
+	-- halfLengths = dimensions of box wall
+	halfLengths = Vec(1, .05, 1)
+	-- center of box wall
+	center = Vec(0, 0, 0)
+	-- create an osgBox object of the same size (doesn't work,thanks osg)
+	tbox = osgBoxByLeif( center, halfLengths )
+	-- add osgBox to shakebox (osg.MatrixTransform()
 	shakebox:addChild(tbox)
+	
+	-- making a physical representation of the box wall (based on halfLengths)
 	box = bullet.btBoxShape(bullet.btVector3(halfLengths:x(), halfLengths:y(), halfLengths:z()))
+	
+	-- create a bullet transform (not sure why yet)
 	trans = bullet.btTransform()
 	trans:setIdentity()
+	-- set orgin of transform to be center of box wall
 	trans:setOrigin(bullet.btVector3(center:x(), center:y(), center:z()))
+	-- add box to compound shape object "cs"
 	cs:addChildShape(trans, box)
 end
+]]
+--[[
 -- // top +Z (invisible, to allow user to see through; no OSG analogue
 do
 	halfLengths = osg.Vec3(xDim*.5, yDim*.5, thick*.5)
@@ -137,17 +166,19 @@ do
 	cs:addChildShape(trans, box)
 end
 -- // left -X  
-do
-	halfLengths = osg.Vec3(thick*.5, yDim*.5, zDim*.5)
-	center = osg.Vec3(-xDim*.5, 0.0, 0.0 )
-	tbox = osgBox( center, halfLengths )
-	shakebox:addChild(tbox)
-	box = bullet.btBoxShape(bullet.btVector3(halfLengths:x(), halfLengths:y(), halfLengths:z()))
-	trans = bullet.btTransform()
-	trans:setIdentity()
-	trans:setOrigin(bullet.btVector3(center:x(), center:y(), center:z()))
-	cs:addChildShape(trans, box)
-end
+]]
+-- do
+	-- halfLengths = osg.Vec3(thick*.5, yDim*.5, zDim*.5)
+	-- center = osg.Vec3(-xDim*.5, 0.0, 0.0 )
+	-- tbox = osgBox( center, halfLengths )
+	-- shakebox:addChild(tbox)
+	-- box = bullet.btBoxShape(bullet.btVector3(halfLengths:x(), halfLengths:y(), halfLengths:z()))
+	-- trans = bullet.btTransform()
+	-- trans:setIdentity()
+	-- trans:setOrigin(bullet.btVector3(center:x(), center:y(), center:z()))
+	-- cs:addChildShape(trans, box)
+-- end
+--[[
 -- // right +X
 do
 	halfLengths = osg.Vec3(thick*.5, yDim*.5, zDim*.5)
@@ -185,7 +216,7 @@ do
 	cs:addChildShape(trans, box)
 end
 -- /* END: Create environment boxes */
-
+]]
 shakeMotion = osgbDynamics.MotionState()
 shakeMotion:setTransform( shakebox )
 local mass = 0.0 --in C++, this was of type btScalar
@@ -201,16 +232,19 @@ shakeBody:setCollisionFlags( bitor(shakeBody:getCollisionFlags(), bullet.btColli
 shakeBody:setActivationState( bullet.btCollisionObject.DISABLE_DEACTIVATION )
 bulletWorld:addRigidBody( shakeBody )
 
---root:addChild( shakebox )
+root:addChild( shakebox )
 
 RelativeTo.World:addChild(root)
 
-
-Actions.addFrameAction(function()
-	while true do
-		elapsed = Actions.waitForRedraw()
-		--http://stackoverflow.com/questions/12778229/stepsimulation-bullet-physics
-		--http://bulletphysics.org/mediawiki-1.5.8/index.php/Stepping_The_World
-		bulletWorld:stepSimulation(elapsed)
-	end
-end)
+function startSim()
+	Actions.addFrameAction(function()
+		while true do
+			elapsed = Actions.waitForRedraw()
+			-- print(die1:getMatrix():getTrans())
+			--http://stackoverflow.com/questions/12778229/stepsimulation-bullet-physics
+			--http://bulletphysics.org/mediawiki-1.5.8/index.php/Stepping_The_World
+			bulletWorld:stepSimulation(elapsed)
+		end
+	end)
+end
+-- startSim()
