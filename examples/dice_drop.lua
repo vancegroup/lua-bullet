@@ -26,7 +26,6 @@ local function makeDie(bw, pos)
 	bw:addRigidBody(body)
 	return root
 end
-
 -- bitwise inclusive OR (http://ricilake.blogspot.com/2007/10/iterating-bits-in-lua.html)
 local function bitor(x, y)
 	local function bit(p)
@@ -86,49 +85,54 @@ local function osgBox(center, halfLengths)
 	return t
 end
 
+--create a "bulletWorld" main object to handle bullet physics
 local bulletWorld = initPhysics()
-
+--create two simple osgObjects that get added to our bulletWorld
 local die1 = makeDie(bulletWorld, {1.75, 5, -4})
 local die2 = makeDie(bulletWorld, {0, 2, -4})
-
+--add osgObjects to osgGroup node
 local root = Group{
 	die1,
 	die2
 }
-
-local shakebox = osg.MatrixTransform()
-
+--create a floor osgObject
+local floorTransform = osg.MatrixTransform()
+--create a static plane (ground object) for dice objects to land upon
 cs = bullet.btStaticPlaneShape(bullet.btVector3(0, 1, 0), 0)
-local halfLengths = Vec(2, .025, 2)
-local center = Vec(0, .025, -2)
-local thefloor = osgBox(center, halfLengths)
-shakebox:addChild(thefloor)
+--Create floor OSG to visualize the static plane: osgBox(position, halfLengths)
+local thefloorOSG = osgBox(Vec(0, .025, -2), Vec(2, .025, 2))
+--add floorOSG object to floor MT transform
+floorTransform:addChild(thefloorOSG)
+--create motionstate for constructing static plane rigid body
+motionState = osgbDynamics.MotionState()
+--associate osgMT transform with motionState
+motionState:setTransform(floorTransform)
 
-shakeMotion = osgbDynamics.MotionState()
-shakeMotion:setTransform(shakebox)
-local mass = 0.0
-local inertia = bullet.btVector3(0.0, 0.0, 0.0)
-
-rb = bullet.btRigidBody.btRigidBodyConstructionInfo(mass, shakeMotion, cs, inertia)
-shakeBody = bullet.btRigidBody(rb)
-
-shakeBody:setCollisionFlags(bitor(shakeBody:getCollisionFlags(), bullet.btCollisionObject.CF_KINEMATIC_OBJECT))
-shakeBody:setActivationState(bullet.btCollisionObject.DISABLE_DEACTIVATION)
-bulletWorld:addRigidBody(shakeBody)
-
-root:addChild(shakebox)
-
+--create rigidBodyConstructorInfo object (required to create rigid body):
+--use: bullet.btRigidBody.btRigidBodyConstructionInfo(mass, motionState, collisionShape, inertia)
+rigidBodyConstructorInfo = bullet.btRigidBody.btRigidBodyConstructionInfo(0.0, motionState, cs, bullet.btVector3(0.0, 0.0, 0.0))
+--create rigid body for the floor
+floorRigidBody = bullet.btRigidBody(rigidBodyConstructorInfo)
+--set flags for floor rigid body
+floorRigidBody:setCollisionFlags(bitor(floorRigidBody:getCollisionFlags(), bullet.btCollisionObject.CF_KINEMATIC_OBJECT))
+floorRigidBody:setActivationState(bullet.btCollisionObject.DISABLE_DEACTIVATION)
+--add floor rigid body to bulletWorld
+bulletWorld:addRigidBody(floorRigidBody)
+--add floor (osg) MT transform to the root group node
+root:addChild(floorTransform)
+--add root group node to scenegraph
 RelativeTo.World:addChild(root)
 
 --http://stackoverflow.com/questions/12778229/stepsimulation-bullet-physics
 --http://bulletphysics.org/mediawiki-1.5.8/index.php/Stepping_The_World
-function startSim()
-	Actions.addFrameAction(function()
-		Actions.waitSeconds(3)
-		while true do
-			elapsed = Actions.waitForRedraw()
-			bulletWorld:stepSimulation(elapsed)
-		end
-	end)
-end
-startSim()
+
+--add a frame action to step the simulation based on dt
+Actions.addFrameAction(function()
+	-- wait 3 seconds before starting simulation
+	Actions.waitSeconds(3)
+	while true do
+		elapsed = Actions.waitForRedraw()
+		-- step simulation one step
+		bulletWorld:stepSimulation(elapsed)
+	end
+end)
