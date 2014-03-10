@@ -38,3 +38,11 @@ template<> luabind::scope getLuaBinding<btPolyhedralConvexShape>() {
 	    class_<btPolyhedralConvexShape, btConvexInternalShape> ("btPolyhedralConvexShape")
 	    ;
 }
+
+template<> luabind::scope getLuaBinding<btPolyhedralConvexAabbCachingShape>() {
+	using namespace luabind;
+
+	return
+	    class_<btPolyhedralConvexAabbCachingShape, btPolyhedralConvexShape> ("btPolyhedralConvexAabbCachingShape")
+	    ;
+}
