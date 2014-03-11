@@ -58,6 +58,9 @@ static osg::ref_ptr<osgbDynamics::CreationRecord> crFromTable(luabind::argument 
 	if (t["shapeType"]) {
 		c->_shapeType = object_cast<BroadphaseNativeTypes>(t["shapeType"]);
 	}
+	if (t["overall"]) {
+		c->_overall = object_cast<bool>(t["overall"]);
+	}
 	/// @todo I think there are a few more fields here that might be useful.
 
 	return c;
