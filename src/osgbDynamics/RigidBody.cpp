@@ -62,6 +62,7 @@ static osg::ref_ptr<osgbDynamics::CreationRecord> crFromTable(luabind::argument 
 
 	return c;
 }
+
 static btRigidBody * createRigidBodyNicely(luabind::argument t) {
 	osg::ref_ptr<osgbDynamics::CreationRecord> c = crFromTable(t);
 	// Choose the unary or binary createRigidBody overload.
@@ -72,14 +73,6 @@ static btRigidBody * createRigidBodyNicely(luabind::argument t) {
 
 }
 
-static btRigidBody * createRigidBodyProtected(luabind::argument t) {
-	btRigidBody * rb = createRigidBodyNicely(t);
-	if (!rb) {
-		std::cout << "GOT NULL!" << std::endl;
-	}
-	return rb;
-}
-
 static btCollisionShape * createCollisionShapeNicely(luabind::argument t) {
 	osg::ref_ptr<osgbDynamics::CreationRecord> c = crFromTable(t);
 	return osgbDynamics::createCollisionShape(c.get());
@@ -88,6 +81,6 @@ static btCollisionShape * createCollisionShapeNicely(luabind::argument t) {
 luabind::scope getLuaBinding_osgbDynamicsRigidBody() {
 	using namespace luabind;
 
-	return def("createRigidBody", &createRigidBodyProtected),
+	return def("createRigidBody", &createRigidBodyNicely),
 		def("createCollisionShape", &createCollisionShapeNicely);
 }
