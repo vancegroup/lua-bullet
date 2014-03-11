@@ -31,10 +31,10 @@
 // Standard includes
 // - none
 #include <iostream>
+static osg::ref_ptr<osgbDynamics::CreationRecord> crFromTable(luabind::argument t) {
 
-static btRigidBody * createRigidBodyNicely(luabind::argument t) {
 	if (luabind::type(t) != LUA_TTABLE) {
-		throw std::runtime_error("Must pass a table of arguments to createRigidBody!");
+		throw std::runtime_error("Must pass a table of arguments!");
 	}
 	osg::ref_ptr<osgbDynamics::CreationRecord> c(new osgbDynamics::CreationRecord);
 	using luabind::object_cast;
@@ -60,6 +60,10 @@ static btRigidBody * createRigidBodyNicely(luabind::argument t) {
 	}
 	/// @todo I think there are a few more fields here that might be useful.
 
+	return c;
+}
+static btRigidBody * createRigidBodyNicely(luabind::argument t) {
+	osg::ref_ptr<osgbDynamics::CreationRecord> c = crFromTable(t);
 	// Choose the unary or binary createRigidBody overload.
 	if (t["collisionShape"]) {
 		return osgbDynamics::createRigidBody(c.get(), luabind::object_cast<btCollisionShape*>(t["collisionShape"]));
@@ -76,8 +80,14 @@ static btRigidBody * createRigidBodyProtected(luabind::argument t) {
 	return rb;
 }
 
+static btCollisionShape * createCollisionShapeNicely(luabind::argument t) {
+	osg::ref_ptr<osgbDynamics::CreationRecord> c = crFromTable(t);
+	return osgbDynamics::createCollisionShape(c.get());
+}
+
 luabind::scope getLuaBinding_osgbDynamicsRigidBody() {
 	using namespace luabind;
 
-	return def("createRigidBody", &createRigidBodyProtected);
+	return def("createRigidBody", &createRigidBodyProtected),
+		def("createCollisionShape", &createCollisionShapeNicely);
 }
