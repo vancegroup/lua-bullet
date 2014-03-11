@@ -62,6 +62,8 @@ static osg::ref_ptr<osgbDynamics::CreationRecord> crFromTable(luabind::argument 
 		c->_overall = object_cast<bool>(t["overall"]);
 	}
 	/// @todo I think there are a few more fields here that might be useful.
+	/// scale and parentTransform look a bit too in-depth, but reductionLevel
+	/// is probably useful, and axis might be useful.
 
 	return c;
 }
