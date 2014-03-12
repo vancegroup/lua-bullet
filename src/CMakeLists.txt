@@ -56,14 +56,17 @@ set(OSGBULLET_BINDING
 	BulletCollision/CollisionShapes/btSphereShape.cpp
 	BulletCollision/CollisionShapes/btCylinderShape.cpp
 	BulletCollision/CollisionShapes/btConvexTriangleMeshShape.cpp
+	BulletCollision/Gimpact/btGImpactCollisionAlgorithm.cpp
 	BulletDynamics/Dynamics/btRigidBody.cpp
 	BulletDynamics/ConstraintSolver/btConstraintSolver.cpp
 	BulletCollision/CollisionDispatch/btDefaultCollisionConfiguration.cpp
 	BulletCollision/CollisionDispatch/btCollisionDispatcher.cpp
 	BulletCollision/CollisionDispatch/btCollisionWorld.cpp
+	BulletCollision/CollisionDispatch/btActivatingCollisionAlgorithm.cpp
 	BulletDynamics/ConstraintSolver/btSequentialImpulseConstraintSolver.cpp
 	BulletCollision/BroadphaseCollision/btAxisSweep3.cpp
 	BulletCollision/BroadphaseCollision/btBroadphaseInterface.cpp
+	BulletCollision/BroadphaseCollision/btCollisionAlgorithm.cpp
 	BulletDynamics/Dynamics/btDiscreteDynamicsWorld.cpp
 	BulletDynamics/Dynamics/btDynamicsWorld.cpp
 	LinearMath/btTransform.cpp

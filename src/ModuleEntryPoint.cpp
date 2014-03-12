@@ -60,6 +60,9 @@ class btStaticPlaneShape;
 class btSphereShape;
 class btCylinderShape;
 class btCompoundShape;
+class btCollisionAlgorithm;
+class btActivatingCollisionAlgorithm;
+class btGImpactCollisionAlgorithm;
 class btCollisionObject;
 class btPolyhedralConvexShape;
 class btConvexInternalShape;
@@ -124,6 +127,9 @@ int luaopen_luabullet(lua_State *L) {
 	    getLuaBinding<btTransform>(),
 	    getLuaBinding<btBroadphaseProxy>(),
 	    getLuaBinding<btCompoundShape>(),
+		getLuaBinding<btCollisionAlgorithm>(),
+		getLuaBinding<btActivatingCollisionAlgorithm>(),
+		getLuaBinding<btGImpactCollisionAlgorithm>(),
 
 	    scope() // trailing empty scope so we can put commas after each binding call
 	];
