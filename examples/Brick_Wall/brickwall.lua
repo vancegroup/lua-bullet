@@ -7,22 +7,24 @@ runfile[[../bitwise_inclusive_or.lua]]
 local device = gadget.PositionInterface("VJWand")
 
 local function initPhysics()
-	constructionInfo = bullet.btDefaultCollisionConstructionInfo()
-	collisionConfiguration = bullet.btDefaultCollisionConfiguration(constructionInfo)
-	dispatcher = bullet.btCollisionDispatcher(collisionConfiguration)
-	solver = bullet.btSequentialImpulseConstraintSolver()
+	--this function returns a table of bullet objects, the table cannot be local
+	initTable = {}
+	initTable.constructionInfo = bullet.btDefaultCollisionConstructionInfo()
+	initTable.collisionConfiguration = bullet.btDefaultCollisionConfiguration(initTable.constructionInfo)
+	initTable.dispatcher = bullet.btCollisionDispatcher(initTable.collisionConfiguration)
+	initTable.solver = bullet.btSequentialImpulseConstraintSolver()
 	--Declare broadphase collision algorithm (btDbvtBroadphase)
 	-- other algorithms include: bt32BitAxisSweep3, btAxisSweep3
-	broadphase = bullet.btDbvtBroadphase()
-	dynamicsWorld = bullet.btDiscreteDynamicsWorld(dispatcher, broadphase, solver, collisionConfiguration)
+	initTable.broadphase = bullet.btDbvtBroadphase()
+	initTable.dynamicsWorld = bullet.btDiscreteDynamicsWorld(initTable.dispatcher, initTable.broadphase, initTable.solver, initTable.collisionConfiguration)
 	--set gravity (currently -9.8 meters in the Y direction)
-	dynamicsWorld:setGravity(bullet.btVector3(0, -9.8, 0))
+	initTable.dynamicsWorld:setGravity(bullet.btVector3(0, -9.8, 0))
 	--Not needed, but changes all collisions with a gimpact trimesh to be solved with gimpact.
 	--bullet.btGImpactCollisionAlgorithm.registerAlgorithm(dispatcher)
-	return dynamicsWorld
+	return initTable
 end
 
-function createBrickWall()
+function createBrickWall(bulletWorld)
 	local brickWall = Transform{}
 	local brick = Model[[../../assets/brick.ive]]
 	local brickLength = brick:getBound():radius()*2
@@ -60,7 +62,7 @@ function createBrickWall()
 	RelativeTo.World:addChild(brickWall)
 end
 
-local function createFloor()
+local function createFloor(bulletWorld)
 	local floorObj = MatrixTransform{
 		Transform{
 			position = {0,0,0},
@@ -76,7 +78,7 @@ local function createFloor()
 	RelativeTo.World:addChild(floorObj)
 end
 
-local function createKinematicTeapot(startingPos)
+local function createKinematicTeapot(bulletWorld,startingPos)
 	local root = MatrixTransform{
 		Transform{
 			position = startingPos,
@@ -102,17 +104,18 @@ local function createKinematicTeapot(startingPos)
 end
 
 --create a "bulletWorld" main object to handle bullet physics & objects
-bulletWorld = initPhysics()
-createFloor()
-createBrickWall()
-teapot_osg, teapotRigidBody = createKinematicTeapot(device.position)
+local physicsTable = initPhysics()
+local bulletWorld = physicsTable.dynamicsWorld
+createFloor(bulletWorld)
+createBrickWall(bulletWorld)
+local teapot_osg, teapotRigidBody = createKinematicTeapot(bulletWorld,device.position)
 --add teapot_osg to world
 RelativeTo.World:addChild(teapot_osg)
 
 --REQUIRED: add a frame action to step the simulation based on dt
 Actions.addFrameAction(function()
 	while true do
-		elapsed_time = Actions.waitForRedraw()
+		local elapsed_time = Actions.waitForRedraw()
 		bulletWorld:stepSimulation(elapsed_time)
 	end
 end)
