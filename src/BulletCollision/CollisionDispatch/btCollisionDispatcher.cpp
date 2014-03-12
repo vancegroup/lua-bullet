@@ -22,6 +22,7 @@
 
 // Library/third-party includes
 #include <luabind/class.hpp>
+#include <luabind/dependency_policy.hpp>
 
 #include <BulletCollision/CollisionDispatch/btCollisionDispatcher.h>
 #include <BulletCollision/CollisionDispatch/btCollisionConfiguration.h>
@@ -62,7 +63,8 @@ template<> luabind::scope getLuaBinding<btCollisionDispatcher>() {
 
 	return
 	    class_<btCollisionDispatcher, btDispatcher> ("btCollisionDispatcher")
-	    .def(constructor<btCollisionConfiguration *>())
+	    /// @todo dependency policy doesn't appear to do the right thing here, but it doesn't hurt.
+	    .def(constructor<btCollisionConfiguration *>(), dependency(return_value, _1))
 	    .def("getDispatcherFlags", &btCollisionDispatcher::getDispatcherFlags)
 	    .def("setDispatcherFlags", &btCollisionDispatcher::setDispatcherFlags)
 	    .def("registerCollisionCreateFunc", &btCollisionDispatcher::registerCollisionCreateFunc)
