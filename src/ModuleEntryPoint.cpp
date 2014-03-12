@@ -70,6 +70,7 @@ class btConvexTriangleMeshShape;
 class btConvexShape;
 class btConcaveShape;
 class btCollisionWorld;
+class btDbvtBroadphase;
 //osgBullet:
 namespace osgbDynamics{
     class MotionState;
@@ -119,6 +120,7 @@ int luaopen_luabullet(lua_State *L) {
 		getLuaBinding<btDispatcher>(),
 	    getLuaBinding<btCollisionDispatcher>(),
 		getLuaBinding<btBroadphaseInterface>(),
+		getLuaBinding<btDbvtBroadphase>(),
 	    getLuaBinding<btSequentialImpulseConstraintSolver>(),
 	    getLuaBinding<btAxisSweep3>(),
 		getLuaBinding<btCollisionWorld>(),
