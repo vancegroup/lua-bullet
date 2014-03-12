@@ -67,6 +67,7 @@ set(OSGBULLET_BINDING
 	BulletCollision/BroadphaseCollision/btAxisSweep3.cpp
 	BulletCollision/BroadphaseCollision/btBroadphaseInterface.cpp
 	BulletCollision/BroadphaseCollision/btCollisionAlgorithm.cpp
+	BulletCollision/BroadphaseCollision/btDbvtBroadphase.cpp
 	BulletDynamics/Dynamics/btDiscreteDynamicsWorld.cpp
 	BulletDynamics/Dynamics/btDynamicsWorld.cpp
 	LinearMath/btTransform.cpp
