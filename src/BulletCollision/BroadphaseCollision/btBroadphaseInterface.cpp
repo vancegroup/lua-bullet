@@ -36,5 +36,18 @@ template<> luabind::scope getLuaBinding<btBroadphaseInterface>() {
 
 	return
 	    class_<btBroadphaseInterface> ("btBroadphaseInterface")
+		.def("createProxy", &btBroadphaseInterface::createProxy)
+		.def("destroyProxy", &btBroadphaseInterface::destroyProxy)
+		.def("setAabb", &btBroadphaseInterface::setAabb)
+		.def("getAabb", &btBroadphaseInterface::getAabb)
+		.def("rayTest", &btBroadphaseInterface::rayTest)
+		.def("aabbTest", &btBroadphaseInterface::aabbTest)
+		.def("calculateOverlappingPairs", &btBroadphaseInterface::calculateOverlappingPairs)
+		///@todo: implement these
+		//.def("getOverlappingPairCache", const)
+		//.def("getOverlappingPairCache", nonconst)
+		.def("getBroadphaseAabb", &btBroadphaseInterface::getBroadphaseAabb)
+		.def("resetPool", &btBroadphaseInterface::resetPool)
+		.def("printStats", &btBroadphaseInterface::printStats)
 	    ;
 }

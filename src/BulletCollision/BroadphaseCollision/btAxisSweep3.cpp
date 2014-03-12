@@ -35,10 +35,12 @@ template<> luabind::scope getLuaBinding<btAxisSweep3>() {
 	using namespace luabind;
 
 	return
-		class_<btAxisSweep3Internal<unsigned short int> , btBroadphaseInterface> ("btAxisSweep3Internal")
-		,
-	    class_<btAxisSweep3, btAxisSweep3Internal<unsigned short int> > ("btAxisSweep3")
+	    class_<btAxisSweep3, btBroadphaseInterface> ("btAxisSweep3")
 			.def(constructor<const btVector3 &, const btVector3 &>())
 			.def(constructor<const btVector3 &, const btVector3 &, unsigned short int>())
+		,
+		class_<bt32BitAxisSweep3, btBroadphaseInterface> ("bt32BitAxisSweep3")
+			.def(constructor<const btVector3 &, const btVector3 &>())
+			.def(constructor<const btVector3 &, const btVector3 &, unsigned int>())
 	    ;
 }
