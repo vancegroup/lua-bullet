@@ -36,6 +36,8 @@ luabind::scope getLuaBinding_osgbDynamicsRigidBody();
 //Linear Math
 class btVector3;
 class btTransform;
+class btQuaternion;
+class btQuadWord;
 class btMotionState;
 //BulletDynamics
 class btSequentialImpulseConstraintSolver;
@@ -127,6 +129,8 @@ int luaopen_luabullet(lua_State *L) {
 		getLuaBinding<btDynamicsWorld>(),
 	    getLuaBinding<btDiscreteDynamicsWorld>(),
 	    getLuaBinding<btTransform>(),
+		getLuaBinding<btQuadWord>(),
+		getLuaBinding<btQuaternion>(),
 	    getLuaBinding<btBroadphaseProxy>(),
 	    getLuaBinding<btCompoundShape>(),
 		getLuaBinding<btCollisionAlgorithm>(),
