@@ -9,8 +9,7 @@ local device = gadget.PositionInterface("VJWand")
 local function initPhysics()
 	--this function returns a table of bullet objects, the table cannot be local
 	initTable = {}
-	initTable.constructionInfo = bullet.btDefaultCollisionConstructionInfo()
-	initTable.collisionConfiguration = bullet.btDefaultCollisionConfiguration(initTable.constructionInfo)
+	initTable.collisionConfiguration = bullet.btDefaultCollisionConfiguration()
 	initTable.dispatcher = bullet.btCollisionDispatcher(initTable.collisionConfiguration)
 	initTable.solver = bullet.btSequentialImpulseConstraintSolver()
 	--Declare broadphase collision algorithm (btDbvtBroadphase)
