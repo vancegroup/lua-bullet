@@ -1,13 +1,21 @@
+--[[
+---Example 7: falling brick wall with teapot---
+This example is a series of functions that create osg objects and
+bullet rigid body objects. The simulation is comprised of a static 
+floor object, a multitude of brick objects and a teapot kinematic object. 
+The teapot is tied to the wand and can push/move bricks on the floor.
+Please read other examples if you have questions.
+]]--
+
 require("luabullet")
 require "AddAppDirectory"
 AddAppDirectory()
-runfile[[../simpleLights.lua]]
-runfile[[../bitwise_inclusive_or.lua]]
+runfile[[includes/simpleLights.lua]]
+runfile[[includes/bitwise_inclusive_or.lua]]
 
 local device = gadget.PositionInterface("VJWand")
 
 local function initPhysics()
-	--this function returns a table of bullet objects, the table cannot be local
 	initTable = {}
 	initTable.collisionConfiguration = bullet.btDefaultCollisionConfiguration()
 	initTable.dispatcher = bullet.btCollisionDispatcher(initTable.collisionConfiguration)
@@ -25,7 +33,7 @@ end
 
 function createBrickWall(bulletWorld)
 	local brickWall = Transform{}
-	local brick = Model[[../../assets/brick.ive]]
+	local brick = Model[[../assets/brick.ive]]
 	local brickLength = brick:getBound():radius()*2
 	local bricks_wide = 10
 	local bricks_high = 10
@@ -44,8 +52,6 @@ function createBrickWall(bulletWorld)
 				}
 			}
 			local brickRigidBody = osgbDynamics.createRigidBody{
-				--Declare shape type of object (box primitive)
-				-- others include: TRIANGLE_MESH_SHAPE_PROXYTYPE,CONVEX_HULL_SHAPE_PROXYTYPE, GIMPACT_SHAPE_PROXYTYPE
 				shapeType = bullet.btBroadphaseProxy.BOX_SHAPE_PROXYTYPE,
 				sceneGraph = newBrick,
 				mass = 1.0,
@@ -65,7 +71,7 @@ local function createFloor(bulletWorld)
 	local floorObj = MatrixTransform{
 		Transform{
 			position = {0,0,0},
-			Model[[../../assets/floor.ive]]
+			Model[[../assets/floor.ive]]
 		}
 	}
 	local floorRigidBody = osgbDynamics.createRigidBody{
@@ -78,48 +84,33 @@ local function createFloor(bulletWorld)
 end
 
 local function createKinematicTeapot(bulletWorld,startingPos)
-	local root = MatrixTransform{
+	local teapotOSG = MatrixTransform{
 		Transform{
 			position = startingPos,
 			scale = 0.3,
-			Model("../../assets/teapot.osg")
+			Model[[../assets/teapot.osg]]
 		}
 	}
-	-- this differs slightly from the C++ (see RigidBody.cpp for details on what can be passed in)
-	local body = osgbDynamics.createRigidBody{
-		sceneGraph = root,
-		-- Declare shape type for non primitive objects - use GIMPACT_SHAPE_PROXYTYPE (like our teapot)
+	local teapotRigidBody = osgbDynamics.createRigidBody{
+		sceneGraph = teapotOSG,
 		shapeType = bullet.btBroadphaseProxy.GIMPACT_SHAPE_PROXYTYPE,
 		mass = 1.0,
 		restitution = 1.0
 	}
-	--set KINEMATIC flag for body (required if you want to move the body manually)
-	body:setCollisionFlags(bitor(body:getCollisionFlags(), bullet.btCollisionObject.CF_KINEMATIC_OBJECT))
-	-- disable deactivation for body (we always want to check for collisions for the body)
-	body:setActivationState(bullet.btCollisionObject.DISABLE_DEACTIVATION)
-	--add body to bulletWorld
-	bulletWorld:addRigidBody(body)
-	return root, body
+	teapotRigidBody:setCollisionFlags(bitor(teapotRigidBody:getCollisionFlags(), bullet.btCollisionObject.CF_KINEMATIC_OBJECT))
+	teapotRigidBody:setActivationState(bullet.btCollisionObject.DISABLE_DEACTIVATION)
+	bulletWorld:addRigidBody(teapotRigidBody)
+	RelativeTo.World:addChild(teapotOSG)
+	return teapotRigidBody
 end
 
---create a "bulletWorld" main object to handle bullet physics & objects
 local physicsTable = initPhysics()
 local bulletWorld = physicsTable.dynamicsWorld
+
 createFloor(bulletWorld)
 createBrickWall(bulletWorld)
-local teapot_osg, teapotRigidBody = createKinematicTeapot(bulletWorld,device.position)
---add teapot_osg to world
-RelativeTo.World:addChild(teapot_osg)
+local teapotRigidBody = createKinematicTeapot(bulletWorld,device.position)
 
---REQUIRED: add a frame action to step the simulation based on dt
-Actions.addFrameAction(function()
-	while true do
-		local elapsed_time = Actions.waitForRedraw()
-		bulletWorld:stepSimulation(elapsed_time)
-	end
-end)
-
---OPTIONAL: add a frame action to set teapot position to wand position (for interaction)
 Actions.addFrameAction(function()
 	while true do
 		local xform = bullet.btTransform()
@@ -134,4 +125,16 @@ Actions.addFrameAction(function()
 		Actions.waitForRedraw()
 	end
 end)
+
+local function startBulletSimulation()
+	Actions.addFrameAction(function()
+		while true do
+			local elapsed_time = Actions.waitForRedraw()
+			bulletWorld:stepSimulation(elapsed_time)
+		end
+	end)
+end
+
+startBulletSimulation()
+
 
