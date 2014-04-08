@@ -50,7 +50,7 @@ directory.
 * luabullet.pdb
 * osgbullet/osgbCollision.dll
 * osgbullet/osgbDynamics.dll
-* osgbullet/osgwTools.dll
+* osgworks/osgwTools.dll
 
 Testing
 ------------------
