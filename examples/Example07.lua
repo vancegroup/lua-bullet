@@ -83,25 +83,25 @@ local function createFloor(bulletWorld)
 	RelativeTo.World:addChild(floorObj)
 end
 
-local function createKinematicTeapot(bulletWorld,startingPos)
-	local teapotOSG = MatrixTransform{
+local function createKinematicBunny(bulletWorld,startingPos)
+	local bunnyOSG = MatrixTransform{
 		Transform{
 			position = startingPos,
-			scale = 0.3,
-			Model[[../assets/teapot.osg]]
+			scale = 2,
+			Model[[../assets/bunny-1500.osg]]
 		}
 	}
-	local teapotRigidBody = osgbDynamics.createRigidBody{
+	local bunnyRigidBody = osgbDynamics.createRigidBody{
 		sceneGraph = teapotOSG,
 		shapeType = bullet.btBroadphaseProxy.GIMPACT_SHAPE_PROXYTYPE,
 		mass = 1.0,
 		restitution = 1.0
 	}
-	teapotRigidBody:setCollisionFlags(bitor(teapotRigidBody:getCollisionFlags(), bullet.btCollisionObject.CF_KINEMATIC_OBJECT))
-	teapotRigidBody:setActivationState(bullet.btCollisionObject.DISABLE_DEACTIVATION)
-	bulletWorld:addRigidBody(teapotRigidBody)
-	RelativeTo.World:addChild(teapotOSG)
-	return teapotRigidBody
+	bunnyRigidBody:setCollisionFlags(bitor(bunnyRigidBody:getCollisionFlags(), bullet.btCollisionObject.CF_KINEMATIC_OBJECT))
+	bunnyRigidBody:setActivationState(bullet.btCollisionObject.DISABLE_DEACTIVATION)
+	bulletWorld:addRigidBody(bunnyRigidBody)
+	RelativeTo.World:addChild(bunnyOSG)
+	return bunnyRigidBody
 end
 
 local physicsTable = initPhysics()
@@ -109,19 +109,19 @@ local bulletWorld = physicsTable.dynamicsWorld
 
 createFloor(bulletWorld)
 createBrickWall(bulletWorld)
-local teapotRigidBody = createKinematicTeapot(bulletWorld,device.position)
+local bunnyRigidBody = createKinematicBunny(bulletWorld,device.position)
 
 Actions.addFrameAction(function()
 	while true do
 		local xform = bullet.btTransform()
 		local rotMatrixOfWand = device.matrix:getRotate()
 		local quat = bullet.btQuaternion(rotMatrixOfWand:x(),rotMatrixOfWand:y(),rotMatrixOfWand:z(),rotMatrixOfWand:w())
-		teapotRigidBody:getMotionState():getWorldTransform(xform)
+		bunnyRigidBody:getMotionState():getWorldTransform(xform)
 		local origin = xform:getOrigin()
 		local newOrigin = bullet.btVector3(device.position:x(), device.position:y(), device.position:z())
 		xform:setOrigin(newOrigin)
 		xform:setRotation(quat)
-		teapotRigidBody:getMotionState():setWorldTransform(xform)
+		bunnyRigidBody:getMotionState():setWorldTransform(xform)
 		Actions.waitForRedraw()
 	end
 end)
