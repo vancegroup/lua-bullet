@@ -6,6 +6,12 @@ Lua binding to [Bullet](http://bulletphysics.org) and [osgBullet](https://code.g
 https://github.com/vancegroup/lua-bullet
 
 
+Project Status
+--------------
+
+This project is **unmaintained**. You are welcome to build on it pursuant to the licenses, however.
+
+
 Dependencies
 ------------------
 
